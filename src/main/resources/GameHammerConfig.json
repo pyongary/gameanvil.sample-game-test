@@ -1,24 +1,18 @@
 {
   "targetServerList": [
     {
-      "ip": "127.0.0.1",
-      "port": 18200
+      "ip": "dev-sinyutnori2.hangame.com",
+      "port": 11300
     }
   ],
   "serviceList" : [
     {
       "serviceId" : 1,
-      "serviceName" : "TapTap",
-      "channelIdList": [
-        "",
-        "",
-        "",
-        ""
-      ]
+      "serviceName" : "Yut2"
     }
   ],
   "isTestLoggingEnabled": false,
-  "actorCount": 100,
+  "actorCount": 1,
   "scenarioLoopCount": 30,
   "testTimeSeconds": 60,
   "requestTimeoutSeconds": 3,

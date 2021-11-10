@@ -1,24 +1,26 @@
-package com.nhn.gameanvil.sample.test.scenario.state;
-
-import static org.slf4j.LoggerFactory.getLogger;
+package com.nhn.yut2.server.test.scenario.state;
 
 import com.nhn.gameanvil.gamehammer.scenario.State;
 import com.nhn.gameanvil.gamehammer.tool.UuidGenerator;
-import com.nhn.gameanvil.sample.protocol.Authentication;
-import com.nhn.gameanvil.sample.test.scenario.TapTapActor;
+
+import com.nhn.yut2.server.protocol.Yut2GameProto;
+import com.nhn.yut2.server.test.scenario.Yut2Actor;
 import org.slf4j.Logger;
 
+import static org.slf4j.LoggerFactory.getLogger;
+
 // 인증 처리 상태
-public class _3_AuthenticationState extends State<TapTapActor> {
+public class _3_AuthenticationState extends State<Yut2Actor> {
     private static final Logger logger = getLogger(_3_AuthenticationState.class);
     protected static UuidGenerator connectionDeviceIdGenerator = new UuidGenerator("DeviceId");
 
     @Override
-    protected void onEnter(TapTapActor actor) {
+    protected void onEnter(Yut2Actor actor) {
         logger.debug("TapTapActor idx[{}] - onEnter : {}", actor.getIndex(), getStateName());
 
         // 인증 메세지 생성
-        Authentication.AuthenticationReq.Builder authenticationReq = Authentication.AuthenticationReq.newBuilder().setAccessToken("TapTap_AccessToken!!!!");
+        Yut2GameProto.AuthenticationToS.Builder authenticationReq = Yut2GameProto.AuthenticationToS.newBuilder().setAccessToken("test-bot");
+        // Authentication.AuthenticationReq.Builder authenticationReq = Authentication.AuthenticationReq.newBuilder().setAccessToken("TapTap_AccessToken!!!!");
 
         // 인증 요청
         actor.getConnection().authentication(authenticationResult -> {
@@ -34,11 +36,11 @@ public class _3_AuthenticationState extends State<TapTapActor> {
                 );
                 actor.finish(false);
             }
-        }, String.valueOf(actor.getConnection().getUuid()), String.valueOf(actor.getConnection().getUuid()), connectionDeviceIdGenerator.generateUniqueId(), authenticationReq);
+        }, "Bot" + actor.getConnection().getUuid(), String.valueOf(actor.getConnection().getUuid()), connectionDeviceIdGenerator.generateUniqueId(), authenticationReq);
     }
 
     @Override
-    protected void onExit(TapTapActor actor) {
+    protected void onExit(Yut2Actor actor) {
         logger.debug("TapTapActor idx[{}] - onExit : {}", actor.getIndex(), getStateName());
     }
 }

@@ -1,25 +1,26 @@
-package com.nhn.gameanvil.sample.test.scenario.state;
-
-import static org.slf4j.LoggerFactory.getLogger;
+package com.nhn.yut2.server.test.scenario.state;
 
 import com.nhn.gameanvil.gamehammer.config.TesterConfigLoader;
 import com.nhn.gameanvil.gamehammer.event.EventContainer;
 import com.nhn.gameanvil.gamehammer.scenario.State;
 import com.nhn.gameanvil.gamehammer.tester.Statistics;
-import com.nhn.gameanvil.sample.test.scenario.TapTapActor;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Consumer;
+import com.nhn.yut2.server.test.scenario.Yut2Actor;
 import org.slf4j.Logger;
 
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
+
+import static org.slf4j.LoggerFactory.getLogger;
+
 // 접속 속도조절 요청 상태
-public class _2_RampUpState extends State<TapTapActor> {
+public class _2_RampUpState extends State<Yut2Actor> {
     private static final Logger logger = getLogger(_2_RampUpState.class);
     private static EventContainer<Long> eventConnectComplete = new EventContainer<Long>();
     private final AtomicInteger connectCount = new AtomicInteger(0);
     private long enterTime;
 
     @Override
-    protected void onEnter(TapTapActor actor) {
+    protected void onEnter(Yut2Actor actor) {
         logger.debug("TapTapActor idx[{}] - onEnter : {}", actor.getIndex(), getStateName());
         Consumer<Long> consumer = new Consumer<Long>() {
             @Override
@@ -43,7 +44,7 @@ public class _2_RampUpState extends State<TapTapActor> {
     }
 
     @Override
-    protected void onExit(TapTapActor actor) {
-        logger.debug("TapTapActor idx[{}] - onExit : {}", actor.getIndex(), getStateName());
+    protected void onExit(Yut2Actor actor) {
+        logger.debug("Yut2Actor idx[{}] - onExit : {}", actor.getIndex(), getStateName());
     }
 }

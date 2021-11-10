@@ -1,20 +1,20 @@
-package com.nhn.gameanvil.sample.test.scenario.state;
-
-import static org.slf4j.LoggerFactory.getLogger;
+package com.nhn.yut2.server.test.scenario.state;
 
 import com.nhn.gameanvil.gamehammer.config.TesterConfigLoader;
 import com.nhn.gameanvil.gamehammer.scenario.State;
 import com.nhn.gameanvil.gamehammer.tester.ResultConnect.ResultCodeConnect;
-import com.nhn.gameanvil.sample.test.common.GameConstants;
-import com.nhn.gameanvil.sample.test.scenario.TapTapActor;
+import com.nhn.yut2.server.test.common.GameConstants;
+import com.nhn.yut2.server.test.scenario.Yut2Actor;
 import org.slf4j.Logger;
 
+import static org.slf4j.LoggerFactory.getLogger;
+
 // 연결 요청 상태
-public class _1_ConnectState extends State<TapTapActor> {
+public class _1_ConnectState extends State<Yut2Actor> {
     private static final Logger logger = getLogger(_1_ConnectState.class);
 
     @Override
-    protected void onScenarioTestStart(TapTapActor scenarioActor) {
+    protected void onScenarioTestStart(Yut2Actor scenarioActor) {
         // 서버에서 연결이 끊겼을때 처리
         scenarioActor.getConnection().addListenerDisconnect((resultDisconnect) -> {
             logger.info("[{}] Disconnected - UUID : {}",
@@ -28,8 +28,8 @@ public class _1_ConnectState extends State<TapTapActor> {
     }
 
     @Override
-    protected void onEnter(TapTapActor actor) {
-        logger.debug("TapTapActor idx[{}] - onEnter : {}", actor.getIndex(), getStateName());
+    protected void onEnter(Yut2Actor actor) {
+        logger.debug("Yut2Actor idx[{}] - onEnter : {}", actor.getIndex(), getStateName());
 
         if (actor.getConnection().isConnected()) {
             actor.changeState(_3_AuthenticationState.class);
@@ -55,8 +55,8 @@ public class _1_ConnectState extends State<TapTapActor> {
     }
 
     @Override
-    protected void onExit(TapTapActor actor) {
-        logger.debug("TapTapActor idx[{}] - onExit : {}", actor.getIndex(), getStateName());
+    protected void onExit(Yut2Actor actor) {
+        logger.debug("Yut2Actor idx[{}] - onExit : {}", actor.getIndex(), getStateName());
     }
 
 }

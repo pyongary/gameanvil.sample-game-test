@@ -1,23 +1,20 @@
-package com.nhn.gameanvil.sample.test.scenario;
-
-import static org.slf4j.LoggerFactory.getLogger;
+package com.nhn.yut2.server.test.scenario;
 
 import com.nhn.gameanvil.gamehammer.scenario.ScenarioMachine;
 import com.nhn.gameanvil.gamehammer.scenario.ScenarioTest;
 import com.nhn.gameanvil.gamehammer.tester.Tester;
 import com.nhn.gameanvil.gamehammer.tester.TimeoutStatistics;
-import com.nhn.gameanvil.sample.protocol.Authentication;
-import com.nhn.gameanvil.sample.protocol.GameMulti;
-import com.nhn.gameanvil.sample.protocol.GameSingle;
-import com.nhn.gameanvil.sample.protocol.Result;
-import com.nhn.gameanvil.sample.test.scenario.state.*;
+import com.nhn.yut2.server.protocol.Yut2GameProto;
+import com.nhn.yut2.server.test.scenario.state.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
 
+import static org.slf4j.LoggerFactory.getLogger;
+
 public class TestScenario {
     private static final Logger logger = getLogger(TestScenario.class);
-    static ScenarioTest<TapTapActor> scenarioTest;
+    static ScenarioTest<Yut2Actor> scenarioTest;
     static Tester.Builder testerBuilder;
 
     @BeforeClass
@@ -34,7 +31,7 @@ public class TestScenario {
         // 테스트 시작
         logger.info("Test Start!!!");
         scenarioTest.start(tester,
-            TapTapActor.class,
+            Yut2Actor.class,
             _1_ConnectState.class,
             false
         );
@@ -47,29 +44,25 @@ public class TestScenario {
     private static void initConfig() {
         // 테스터 기본 프로토콜 설정
         testerBuilder = Tester.newBuilderWithConfig();
-        testerBuilder.addProtoBufClass(0, Authentication.getDescriptor())
-            .addProtoBufClass(1, GameMulti.getDescriptor())
-            .addProtoBufClass(2, GameSingle.getDescriptor())
-            .addProtoBufClass(3, Result.getDescriptor())
-            .addProtoBufClass(4, com.nhn.gameanvil.sample.protocol.User.getDescriptor());
+        testerBuilder.addProtoBufClass(0, Yut2GameProto.getDescriptor());
     }
 
     private static void initScenario() {
         // scenario 생성
-        ScenarioMachine<TapTapActor> scenario = getScenarioMachineType();
+        ScenarioMachine<Yut2Actor> scenario = getScenarioMachineType();
         scenarioTest = new ScenarioTest<>(scenario);
     }
 
-    private static ScenarioMachine<TapTapActor> getScenarioMachineType() {
+    private static ScenarioMachine<Yut2Actor> getScenarioMachineType() {
         // 시나이로 머신에 상태 등록
-        ScenarioMachine<TapTapActor> scenario = new ScenarioMachine<>("TapTap");
+        ScenarioMachine<Yut2Actor> scenario = new ScenarioMachine<>("Yut2");
 
         scenario.addState(new _1_ConnectState());
         scenario.addState(new _2_RampUpState());
         scenario.addState(new _3_AuthenticationState());
         scenario.addState(new _4_LoginState());
-        scenario.addState(new _5_CreateRoomState());
-        scenario.addState(new _6_PlayGameState());
+        scenario.addState(new _5_MatchRoomState());
+        scenario.addState(new _6_StartGame());
         scenario.addState(new _7_LeaveRoomState());
         scenario.addState(new _8_LogoutState());
 

@@ -1,0 +1,924 @@
+syntax = "proto3";
+
+package com.nhn.yut2.server.protocol;
+
+enum FreeBettingType {
+    NONE = 0;
+    PIN = 1; // (삥) 기본 판돈의 금액을 베팅 하는 것
+    CHECK = 2; // 베팅을 하지 않고 현재 상황에서 다음 순번 에게 베팅을 넘기는 것
+    ONE_MORE = 3; // 앞에서 베팅한 금액의 동일한 금액을 베팅 하는 것
+    CALL = 4; // 앞에서 베팅한 금액을 받기만 하고 추가 적인 베팅은 하지 않는 것
+    QUARTER = 5; // 전체 판돈의 1/4의 금액을 베팅 하는 것
+    HALF = 6; // 전체 판돈의 1/2 금액을 베팅 하는 것
+    FULL = 7; // 전체 판돈 금액 모두를 베팅 하는 것
+    ALL_IN = 8; // 내가 가진 금액 전부를 베팅 하는 것
+    DIE = 9;
+}
+
+enum PaeType {
+    DO = 0;
+    GAE = 1;
+    GUL = 2;
+    YYUT = 3;
+    MO = 4;
+    BACKDO = 5;
+    NACK = 6;
+}
+
+enum PawnStateCode {
+    READY = 0;
+    ON_BOARD = 1;
+    HOME_IN = 2;
+}
+
+enum PlayerStateCode {
+    Ready = 0; // 플레이참가 대기상태
+    Running = 1; // 플레이중
+    Stop = 2; // 플레이멈춤(다이, 게임종료등)
+    Winner = 3; // 승자
+    Observer = 4; // 관전자
+}
+
+enum SeatStateCode {
+    SIT_IN = 0; // 빈자리
+    SIT_FULL = 1; // 플레이 중
+    RESERVE_OUT = 2; // 나가기 예약
+}
+
+enum RoomState {
+    ROOM_READY = 0;
+    ROOM_ELECT_LEADER = 1;
+    ROOM_PREPARE_GAME = 2;
+    ROOM_TOSS_YUT = 3;
+    ROOM_MOVE_PAWN = 4;
+    ROOM_BETTING = 5;
+    ROOM_FINISH = 6;
+}
+
+enum WarpType {
+    WARP_NONE = 0;
+    WARP_DO = 1;
+    WARP_GAE = 2;
+    WARP_GUL = 3;
+    WARP_YYUT = 4;
+    WARP_MO = 5;
+    WARP_GOAL = 6;
+    WARP_5 = 7;
+    WARP_10 = 8;
+    WARP_15 = 9;
+    WARP_22 = 10;
+}
+
+enum CHAT_TYPE {
+    NORMAL = 0;
+    WHISPER = 1;
+    NOTICE = 2;
+}
+
+message LevelInfo {
+    int32 lv = 1;
+    int32 exp = 2;
+}
+
+enum EquipSlot {
+    NONE_SLOT = 0;
+    EMOTICON = 1;
+    DRINK = 2;
+    YUT_SKIN = 3;
+    BADGE = 4;
+    DRINK_BINGO_POINT = 5;
+}
+
+enum PawnBuffType {
+    None = 0;
+    MONEY_BONUS = 1; // 승리시 추가머니
+    LEVELPOINT_BONUS = 2; // 경험치 추가
+    BINGOPOINT_BONUS = 3; // 빙고포인트 추가
+    GUBAK_GUARANTEE = 4; // 구박 보험
+    MALBAK_GUARANTEE = 5; // 말박 보험
+    NAK_GUARANTEE = 6; // 낙 보험
+    EVENTITEM_BONUS = 7; // 이벤트 아이템 추가
+}
+
+// 유저 데이터
+message UserData {
+    string memberId = 1;
+    string nickname = 2;
+    int64 gameMoney = 3;
+    int32 pawnId = 4;
+    LevelInfo lvInfo = 5;
+    string helloMsg = 6;
+    map<int32, string> avatarInfo = 7; // index (0: 한게임)
+    map<int32, int32> equipmentInfo = 9; // key:EquipSlot value:ItemID
+    int64 payDia = 10;
+    int64 freeDia = 11;
+    int64 friendPoint = 12;
+}
+
+message AuthenticationInfo {
+    string appId = 2; // 등록된 어플리케이션 id/번호 ...
+    string storeCode = 5; // Store code (GG, FB ...)
+    string osVersion = 6; // 클라이언트 OS 버전
+    string sdkVersion = 7; // 클라이언트에 적용된 메인 SDK 버전(android sdk...)
+    string clientVersion = 8; // 클라이언트 빌드 버전
+    string countryCode = 9; // 클라이언트가 접속한 지역 code
+    string deviceInfo = 10; // 디바이스 정보(모바일 정보 or web browser 정보...)
+}
+
+message AuthenticationToS {
+    string accessToken = 1;
+    bool hangameLogin = 2; // 한게임 로그인 필요여부
+}
+
+message AuthenticationToC {
+    int32 retCode = 1;
+}
+
+// 로그인 요청
+message LoginToS {
+    AuthenticationInfo info = 1;
+}
+
+// 로그인 결과
+message LoginToC {
+    int32 retCode = 1;
+    UserData userData = 2;
+    repeated string jsonStrings = 3; // GameConstantConfig, UserLevelDataTable, PawnDataTable 순으로 담겨있음
+    int64 serverTime = 4;
+    bool registerNickname = 5; // 닉네임 설정 여부
+}
+
+// 강제 접속 종료 알림
+message ForceLogoutNoti {
+    int32 retCode = 1; // 강제 접속 종료 사유
+    string message = 2; // 부가 메시지
+}
+
+// 유저 데이터 변경 알림
+message UserDataUpdateNoti {
+    UserData userData = 1;
+}
+
+// 채팅 메시지
+message LobbyChatToS {
+    string message = 1;
+    string destNickName = 2;
+}
+
+message LobbyChatToC {
+    CHAT_TYPE type = 1;
+    string senderNickName = 2;
+    string message = 3;
+    int64 time = 4;
+}
+
+// 게임 컨텐츠 상세 정보
+message ContentsInfo {
+    string id = 1;
+    string type = 2;
+    string jsonData = 3;
+    int32 retCode = 4;
+}
+
+// 게임 컨텐츠 정보 요청
+message GameContentsToS {
+    ContentsInfo info = 1;
+}
+
+// 게임 컨텐츠 정보 응답
+message GameContentsToC {
+    repeated ContentsInfo infos = 1;
+}
+
+// 치트
+// 구분자는 "/"이며 대소문자를 구분하지 않음.
+// 1. 패 고정 --> pae_fix/{Pae Name}
+//                 - Pae Name : DO(or GAE,GIRL,YYUT,MO,BACKDO,NAK)
+// 2. 패 랜덤 --> pae_random
+message CheatToS {
+    string cmd = 1;
+}
+message CheatToC {
+    int32 retCode = 1;
+}
+
+// 말 데이터
+message PawnInfo {
+    int32 ownerSeatNo = 1; // 소유자 자리 번호
+    int32 placeIndex = 2; // 윷판 위치값
+    int32 pawnId = 3; // PawnDataTable ID
+    PawnStateCode state = 4; // 상태(0:미출루, 1:출루 2:홈인)
+    bool isHidden = 5;
+    WarpType warpType = 6; // default: WARP_NONE / 자신의 히든 말의 경우에만 값이 들어가 있을수 있음. 사용후엔 역시 default 값
+    int32 generateId = 7; // pawn 고유번호
+}
+
+message BoardItem {
+    enum ItemType {
+        None = 0;
+        Marble = 1; // 구슬
+        ChanceBox = 2; // 찬스 박스
+        Wood_Star = 3;
+        Blue_Star = 4;
+        Yellow_Star = 5;
+        Purple_Star = 6;
+        Black_Star = 7;
+        Event_1 = 11;
+        Event_2 = 12;
+        Event_3 = 13;
+        Event_4 = 14;
+        Event_5 = 15;
+    }
+    ItemType itemType = 1;
+    int32 placeId = 3;
+}
+
+// 거점 정보
+message BaseSpot {
+    int32 placeId = 1;
+    int32 ownerSeatNo = 2;
+}
+
+// 미션 진행 정보
+message GameMissionProgress {
+    int32 missionId = 1; // 게임 미션 ID
+    bool isComplete = 2; // 완료 여부
+    repeated int32 values = 3; // 게임 미션 완료 조건 상태 값들 현황
+}
+
+message BetSummary {
+    int64 totalBettingMoney = 1; // 총 Betting Money
+    int32 bettingGauge = 2; // 프리 베팅 게이지
+    int32 maxFreebetRound = 3; // 프리 베팅 최대 횟수
+    int64 seedMoney = 4;
+}
+
+message CurrentTurnInfo {
+    int32 seatNo = 1; // 현재턴 자리 번호
+    bool canToss = 2; // toss yut 할수 있는지 여부
+    int32 remainChanceCount = 3; // 남은 찬스 개수
+    repeated PaeType remainPaeList = 4; // 남은 패 목록
+}
+
+message RoomData {
+    int32 roomId = 1;
+    repeated RoomMemberInfo members = 2;
+    int32 pawnMaxCount = 3; // 말 최대 갯수
+    int32 hostSeatNo = 4; // 방장 자리 번호
+    int32 leaderSeatNo = 5; // 선 자리 번호
+    CurrentTurnInfo currentTurnInfo = 6;
+    RoomState roomState = 7; // 현재 Room 상태
+    string roomType = 8;
+    BetSummary betSummery = 9;
+    repeated BoardItem items = 10;
+    repeated BaseSpot baseSpots = 11;
+    int32 channelType = 12;
+    map<int32, int32> leaderMaps = 13; // 선선택 중이면 seatNo, choiceIndex
+    int32 password = 14;
+}
+
+message BingoInfo {
+    int32 bingoPoint = 1;
+    int32 bingoTicket = 2;
+    int32 delta = 3;
+}
+
+message RoomMemberInfo {
+    UserData baseInfo = 1; // 기본 정보
+    int32 seatNo = 2;
+    repeated PawnInfo pawns = 3; // 보유 말 정보들
+    PlayerStateCode state = 4;
+    PlayerUpdateInfo updateInfo = 5;
+    GameMissionProgress missionInfo = 6;
+    repeated BoardItem catchItems = 7; //획득 아이템 리스트
+    ReserveFlag reserveFlag = 8;
+    BingoInfo bingoInfo = 9;
+}
+
+message RoomOption {
+    int32 channelType = 1;
+    int32 pwd = 2;
+}
+
+message JoinRoomNoti {
+    int32 retCode = 1;
+    string roomType = 2;
+    int32 otp = 3;
+    string extraData = 4;
+}
+
+// 방 입장 요청
+message EnterRoomToS {
+
+}
+
+// 방 입장 응답
+message EnterRoomToC {
+    int32 retCode = 1;
+    RoomData roomData = 2;
+}
+
+// 새로운 유저 방입장 알림
+message JoinRoomMemberInfoNoti {
+    RoomMemberInfo newMember = 1;
+}
+
+enum ReserveFlag {
+    FlagNone = 0;
+    LeaveRoom = 1;
+    MoveRoom = 2;
+    AutoPlay = 3;
+    MobilePause = 4;
+    MobileResume = 5;
+}
+// 유저별 예약 플래그 세팅
+message ReserveFlagToS {
+    ReserveFlag reserveFlag = 1;
+    int64 extraValue = 2;
+}
+
+message ReserveFlagToC {
+    int32 retCode = 1;
+    int32 reserveSeatNo = 2; // 유저의 자리 번호
+    string memberId = 3;
+    ReserveFlag reserveFlag = 4;
+    int64 extraValue = 5;
+}
+
+message LeaveRoomNoti {
+    int32 leaveSeatNo = 1; // 나간 유저 자리 번호
+    int32 hostSeatNo = 2; // 방장이 변경된 경우 새로운 방장 자리번호
+    int32 gameLeaderSeatNo = 3; // 선이 변경된 경운 새로운 선 자리번호
+}
+
+message ForceLeaveRoomNoti {
+    int32 retCode = 1; // 강제로 나갈때 이유 코드
+    int64 ret_val1 = 2; // 추가 정보 값.
+}
+
+enum ClientCompleteType {
+    Enter_Room = 0; // 방 입장 처리 완료
+    Result_Leader = 1; // 선 선택 연출 완료
+    Default_Bet = 2; // 기본 베팅 연출 완료
+    Toss_Yut = 3; // toss yut
+    Move_Pawn = 4; // 말 이동 연출 완료
+    Play_Game_Ready = 5; // 두번째 이후 선 선택 Step 없이 게임 시작용
+    Game_Result = 6; // 게임 결과 완료
+    Warp_Pawn = 7; // 히든말 워프 이동 연출 완료
+}
+
+message CompleteTypeToS {
+    ClientCompleteType completeType = 1;
+}
+
+message GameReadyCompleteNoti {
+}
+
+// 게임 시작
+message GameStartToS {
+}
+
+message GameStartToC {
+    int32 retCode = 1;
+    int32 gameLeaderSeatNo = 2; // -1:선없음 (선잡기 필요)
+}
+
+message HiddenPawnInfo {
+    int32 pawnId = 2;
+    WarpType warpType = 3;
+}
+
+message PlayerUpdateInfo {
+    int32 seatNo = 1;
+    int64 deltaMoney = 2;
+    int64 finalMoney = 3;
+    int64 gamePoint = 4;
+    int32 furyGauge = 5;
+    bool furyMode = 6;
+}
+
+// 게임 초기화 알림
+message GameInitializeNoti {
+    repeated PlayerUpdateInfo playerUpdateInfos = 1;
+    int32 missionId = 2; // 이번 게임에 사용될 미션 ID , 미션 없음:0
+    HiddenPawnInfo hiddenPawnInfo = 3; // 자신의 Hidden Pawn 정보
+    repeated BoardItem generateItems = 4;
+}
+
+// 선잡기 윷선택 요청(첫게임 또는 두번째 이후 1명만 남은경우 진행)
+message SelectGameLeaderToS {
+    int32 yutIndex = 1; // 선택한 윷 인덱스 (-1이면 random)
+}
+message SelectGameLeaderToC {
+    int32 retCode = 1;
+    int32 seatNo = 2; // 선택 유저의 고유 자리 번호
+    int32 yutIndex = 3; // 선택한 윷의 위치값
+}
+message ResultGameLeaderNoti {
+    int32 seatNo = 1; // 선으로 당첨된 유저의 자리 번호
+    int32 yutIndex = 2; // 선으로 당첨된 유저가 선택한 윷의 인덱스
+}
+
+message FreeBettingInfo {
+    FreeBettingType type = 1;
+    int64 betMoney = 2; // FreeBettingType 따른 베팅 금액
+    bool isEnable = 3; // true:Enable false:Disable
+}
+
+// 현재 차례 알림
+message CurrentTurnNoti {
+    int32 seatNo = 1;
+    bool isFreeBet = 2;
+    repeated FreeBettingInfo freeBettingInfos = 3;
+    int32 remainChanceCount = 4; // 보유 찬스 개수
+    int32 currentRound = 5; // 현재 프리 베팅 라운드
+    bool canToss = 6; // toss yut 가능 여부
+    repeated PaeType remainPaeList = 7; // 말 이동에 사용 되지 않은 패
+    repeated BoardItem remainItems = 8; // 보드에 남은 아이템 (재생성 포함)
+    PlayerUpdateInfo updateInfo = 9;
+}
+
+message PawnBuffInfo {
+    int32 seatNo = 1;
+    PawnBuffType type = 2;
+    int64 value = 3;
+}
+
+// 윷 던지기
+message TossYutToS {
+    int32 selectChanceIndex = 1; // 찬스 사용: 0 ~ 5, 미사용:-1
+}
+
+message TossYutToC {
+    int32 retCode = 1;
+    int32 seatNo = 2;
+    PaeType pae = 3;
+    int32 freeBettingGauge = 4;
+    int32 selectChanceIndex = 5; // 찬스 사용: 0 ~ 5, 미사용:-1
+    int32 remainChanceCount = 6; // 보유 찬스 개수
+    PlayerUpdateInfo updateInfo = 7;
+    GameMissionProgress missionInfo = 8;
+    repeated PawnBuffInfo buffList = 9;
+}
+
+message GameMissionProgressNoti {
+    GameMissionProgress missionInfo = 1;
+}
+
+// 말 이동
+message MovePawnToS {
+    PaeType pae = 1; // 이동에 사용한 윷타입
+    int32 fromPlaceNo = 2; // 말의 위치
+    int32 toPlaceNo = 3; // 말의 목표 지점
+}
+
+message MovePawnToC {
+    int32 retCode = 1;
+    int32 seatNo = 2;
+    PaeType paeType = 3; // 이동에 사용한 윷타입
+    int32 fromPlaceNo = 4; // 현재 말의 위치
+    int32 toPlaceNo = 5; // 이동 위치
+    repeated int32 catchPawnIndexes = 6; // 잡힌 말 정보
+    repeated PlayerUpdateInfo updateInfos = 7; // 말 이동에 따른 Player 변경 정보
+    int32 diePlayerSeatNo = 8; // Catch Pawn 의해 Die 상태가 된 Player SeatNo
+    repeated BoardItem catchItems = 9;
+    bool isBaseSpot = 10;
+    bool pawnPenaltyWarn = 11; // 말박 적용 가능
+    bool marvelPenaltyWarn = 12; // 구박 적용 가능
+    BingoInfo bingoInfo = 13;
+    repeated int32 movePawnIndexes = 14;
+    repeated PawnBuffInfo buffList = 15;
+    GameMissionProgress missionInfo = 16;
+}
+
+message WarpPawnToS {
+    int32 pawnId = 1; // 말의 고유 번호
+    int32 toPlaceNo = 2; // 말의 목표 지점
+}
+
+message WarpPawnToC {
+    int32 retCode = 1;
+    int32 seatNo = 2;
+    int32 toPlaceNo = 3; // 이동 위치
+    repeated PawnInfo catchPawns = 4; // 잡힌 말 정보
+    repeated PlayerUpdateInfo updateInfos = 5; // 말 이동에 따른 Player 변경 정보
+    int32 diePlayerSeatNo = 6; // Catch Pawn 의해 Die 상태가 된 Player SeatNo
+    int32 pawnId = 7;
+}
+
+// 프리 베팅
+message FreeBettingToS {
+    FreeBettingType bettingType = 1;
+};
+
+message FreeBettingToC {
+    int32 retCode = 1;
+    int32 seatNo = 2;
+    FreeBettingType bettingType = 3;
+    int64 freeBetTotalMoney = 4;
+    int64 playerLastBetMoney = 5;
+    int64 playerCurrentMoney = 6;
+};
+
+message CalcResultInfo {
+    int32 seatNo = 1;
+    int64 calcResultMoney = 2; // 유저 정산금 (+:획득, -:손실)
+    int64 afterGameMoney = 3;
+    LevelInfo lvInfo = 4;
+    bool levelUp = 5;
+    int32 calcResultPoint = 6; // 최종 점수
+    int32 baseSpotMultiple = 7; // 거점 성공 배수 (1: 없음)
+    int32 missionMultiple = 8; // 미션 성공 배수 (1: 없음)
+    bool marblePenalty = 9; // 구박
+    bool pawnPenalty = 10; // 말박
+    bool bankruptcy = 11; // 파산여부
+    map<int32, int64> useDrinkInfo = 12; // 드링크 사용정보
+    bool limitWinMoney = 13; // 판돈상한제 적용여부
+    repeated PawnBuffInfo buffList = 14;
+    int32 competitionWin = 15; // 대항전일 경우 5연승 여부
+    bool stopCompetitionWin = 16;  // 대항전 우승 실패 여부
+}
+
+// 게임 종료
+message GamePlayCompleteNoti {
+    repeated CalcResultInfo calcResultInfos = 1; // 승리 순서 대로
+    int32 winSeatNo = 2;
+}
+
+message GamePlayerProfileToS {
+    string memberId = 1;
+}
+
+message GamePlayerProfileToC {
+    int32 retCode = 1;
+    string memberId = 2;
+    int32 level = 3;
+    int32 winCount = 4;
+    int32 loseCount = 5;
+    int64 earnMoney = 6;
+    int32 exp = 8;
+    int32 competitionWinCount = 9;
+    int32 competitionLoseCount = 10;
+    int32 competitionFinalCount = 11;
+}
+
+message RoomChatToS {
+    int32 index = 1;
+    string message = 2;
+}
+
+message RoomChatToC {
+    int32 retCode = 1;
+    int32 seatNo = 2;
+    int32 index = 3;
+    string message = 4;
+}
+
+message ChanceToS {
+}
+
+message ChanceToC {
+    int32 retCode = 1;
+    int32 seatNo = 2;
+    map<int32, int32> paeProbabilityMap = 3; //  <PaeType Int value, 확률>
+}
+
+message MailInfo {
+    int64 id = 1; // ID
+    string sender = 2; // 보낸이
+    int64 regDate = 3; // 발송 시간
+    int64 expireDate = 4; // 만료 시간
+    string title = 5; // 제목
+    string body = 6; // 본문
+    int32 attachItemId = 7; // 첨부 아이템 ID
+    int64 attachItemCount = 8; // 첨부 아이템 수
+}
+
+message NewMailCountToS {
+    int32 category = 1; // 0: 일반 , 1: Shop
+}
+
+message NewMailCountToC {
+    int32 category = 1; // 0: 일반 , 1: Shop
+    int32 count = 2;
+    int64 mailId = 3;
+}
+
+message MailListToS {
+    int32 category = 1; // 0: 일반 , 1: Shop
+    int32 page = 2; // 요청 Page
+}
+
+message MailListToC {
+    int32 retCode = 1; // 요청 결과
+    int64 serverTime = 2; // 서버 시간
+    int32 category = 3; // 0: 일반 , 1: Shop
+    int32 total = 4; // 총 메일 개수
+    int32 page = 5; // 요청 Page
+    repeated MailInfo infos = 6; // 메일 리스트
+}
+
+message MailCollectToS {
+    int64 id = 1;
+    int32 clientFlag = 2;
+}
+
+message MailCollectToC {
+    int32 retCode = 1;
+    int64 userMoney = 3; // 요청 이후 유저 Money
+    map<int32, int64> receiveItems = 4;
+    int32 clientFlag = 5;
+}
+
+message MailCollectAllToS {
+    int32 category = 1; // 0: 일반 , 1: Shop
+}
+
+message MailCollectAllToC {
+    int32 retCode = 1; // 요청 결과 코드
+    int32 category = 2; // 0: 일반 , 1: Shop
+    int64 userMoney = 3; // 요청 이후 유저 Money
+    map<int32, int64> receiveItems = 4;
+}
+
+message UserDataToS {
+
+}
+
+message Yut2UserItem {
+    int64 id = 1;
+    int32 itemId = 2;
+    int64 itemCount = 3;
+    int64 expireTime = 4;
+}
+
+message Yut2UserPawn {
+    int64 id = 1;
+    int32 pawnId = 2;
+    int64 expireTime = 3;
+}
+
+message InventoryToS {
+
+}
+
+message InventoryToC {
+    int32 retCode = 1;
+    int64 serverTime = 2;
+    repeated Yut2UserItem items = 3;
+    repeated Yut2UserPawn pawns = 4;
+    UserData latestUserData = 5;
+}
+
+
+enum FriendConfirmType {
+    FRIEND_YES = 0; // 수락
+    FRIEND_NO = 1; // 거절
+}
+
+enum FriendState {
+    FRIEND_NONE = 0; // 관계없음
+    FRIEND_OK = 1; // 친구
+    FRIEND_RECV = 2; // 받은상태
+    FRIEND_SEND = 3; // 보낸상태
+}
+
+enum FriendPointState {
+    FRIEND_POINT_BEFORE = 0; // 발송전
+    FRIEND_POINT_AFTER = 1; // 발송후
+}
+
+enum MemoReadState {
+    MEMO_READ_BEFORE = 0; // 읽기전
+    MEMO_READ_AFTER = 1; // 읽은후
+}
+
+//친구정보
+message FriendInfo {
+    string memberId = 1; // 유저ID
+    string nickname = 2; // 닉네임
+    int32 pawnId = 3; // 캐릭터ID
+    int32 lv = 4; // 레벨
+    FriendState friendState = 5; // 친구상태
+    FriendPointState friendPointState = 6; // 친구포인트 발송상태
+}
+
+//친구상세정보
+message FriendInfoDetail {
+    FriendInfo friendInfo = 1; // 친구정보
+    bool connect = 2; // 접속유무
+    int64 logoutdate = 3; // 마지막접속시간
+    FriendPointState friendPointState = 4; // 친구포인트 발송상태
+    bool gamePlay = 5; // 게임플레이중 유무
+}
+
+//친구검색정보
+message FriendInfoState {
+    FriendInfo friendInfo = 1; // 친구정보
+}
+
+//친구리스트
+message FriendListToS {
+}
+
+message FriendListToC {
+    int32 retCode = 1;
+    int64 friendPoint = 2; // 보유 윷 포인트
+    repeated FriendInfoDetail infodetails = 3; // 친구리스트
+    int32 friendMaxCount = 4; // 친구최대수
+    FriendNewIconInfo iconInfo = 5; // 친구 아이콘 알림 정보
+}
+
+//친구추가
+message FriendAddSearchToS {
+    string nickname = 1;
+}
+
+message FriendAddSearchToC {
+    int32 retCode = 1;
+    repeated FriendInfoState infoStates = 2;
+    FriendNewIconInfo iconInfo = 5; // 친구 아이콘 알림 정보
+}
+
+//친구요청
+message FriendRequestListToS {
+}
+
+message FriendRequestListToC {
+    int32 retCode = 1;
+    int32 friendMaxCount = 2; // 친구최대수
+    repeated FriendInfo recvInfos = 3; // 받은친구리스트
+    repeated FriendInfo requestInfos = 4; // 요청친구리스트
+    FriendNewIconInfo iconInfo = 5; // 친구 아이콘 알림 정보
+}
+
+//쪽지정보
+message MemoInfo {
+    string memberId = 1; // 유저ID
+    string nickname = 2; // 닉네임
+    int32 pawnId = 3; // 캐릭터ID
+    string memo = 4; // 쪽지내용
+    int64 regdate = 5; // 쪽지시간
+    MemoReadState memoReadState = 6; // 읽음상태
+}
+
+//쪽지리스트
+message MemoListToS {
+}
+
+message MemoListToC {
+    int32 retCode = 1;
+    repeated MemoInfo infos = 2;
+    int32 memoMaxCount = 3; // 쪽지최대수
+    FriendNewIconInfo iconInfo = 5; // 친구 아이콘 알림 정보
+}
+
+//쪽지확인
+message MemoDetailToS {
+    string targetMemberId = 1; // 대상유저ID
+}
+
+message MemoDetailToC {
+    int32 retCode = 1;
+    repeated MemoInfo infos = 2;
+    string fromMemberId = 3; // 보낸이 유저ID
+    string fromNickname = 4; // 보낸이 닉네임
+    int32 fromPawnId = 5; // 보낸이 캐릭터ID
+}
+
+//쪽지보내기
+message MemoSendToS {
+    string targetMemberId = 1; // 대상유저ID
+    string memo = 2; // 쪽지내용
+}
+
+message MemoSendToC {
+    int32 retCode = 1;
+}
+
+//윷선물하기
+message FriendPointGiftSendToS {
+    string targetMemberId = 1; // 대상유저ID
+}
+
+message FriendPointGiftSendToC {
+    int32 retCode = 1;
+    FriendPointState friendPointState = 2;
+    string targetMemberId = 3;
+}
+
+//윷선물 한번에 보내기
+message FriendPointGiftSendAllToS {
+}
+
+message FriendPointGiftSendAllToC {
+    int32 retCode = 1;
+    int64 userMoney = 2; // 요청 이후 유저 Money
+}
+
+//친구삭제
+message FriendDeleteToS {
+    string targetMemberId = 1; // 대상유저ID
+}
+
+message FriendDeleteToC {
+    int32 retCode = 1;
+}
+
+//친구추가 요청
+message FriendAddRequestToS {
+    string targetMemberId = 1; // 대상유저ID
+}
+
+message FriendAddRequestToC {
+    int32 retCode = 1;
+}
+
+//친구받은요청 결정
+message FriendRecvRequestToS {
+    string targetMemberId = 1; // 대상유저ID
+    FriendConfirmType friendConfirmType = 2; // 요청결정
+}
+
+message FriendRecvRequestToC {
+    int32 retCode = 1;
+    FriendConfirmType friendConfirmType = 2;
+}
+
+//친구보낸요청 취소
+message FriendSendRequestCancelToS {
+    string targetMemberId = 1; // 대상유저ID
+}
+
+message FriendSendRequestCancelToC {
+    int32 retCode = 1;
+}
+
+//윷교환 구매
+message FriendPointStoreBuyToS {
+    int32 productId = 1; // 상품ID
+}
+
+message FriendPointStoreBuyToC {
+    int32 retCode = 1;
+    int64 friendPoint = 2; // 보유 윷 포인트
+    int32 productId = 3; // 상품ID
+}
+
+//친구 아이콘 알림 정보
+message FriendNewIconInfo {
+    bool newRequestState = 1; // 친구요청 (false : 신규없음, true : 신규있음)
+    bool newMemoState = 2; // 쪽지    (false : 신규없음, true : 신규있음)
+}
+
+//친구아이콘 알림
+message FriendNewIconNoti {
+    int32 retCode = 1;
+}
+
+//친구아이콘 알림 조회
+message FriendNewIconToS {
+}
+
+message FriendNewIconToC {
+    int32 retCode = 1;
+    FriendNewIconInfo friendNewIconInfo = 2; //친구 아이콘 알림 정보
+}
+
+message MemoNewContentNoti {
+    string senderNickName = 1;
+    string memo = 2;
+}
+
+enum FriendGamePlayJoinAnswerType {
+    FRIEND_GAME_PLAY_JOIN_YES = 0; // 수락
+    FRIEND_GAME_PLAY_JOIN_NO = 1;  // 거절
+    FRIEND_GAME_PLAY_JOIN_NOT_LOBBY = 2;  // 로비상태아님
+}
+
+//친구 게임 요청
+message FriendGamePlayRequestToS {
+    string inviteMemberId = 1;        // 초대 받은 memberId
+    string searchInviteNickName = 2;  // 닉네임 검색 요청시 사용
+    int32 otp = 3;                    // 방비밀번호
+}
+
+message FriendGamePlayRequestToC {
+    int32 retCode = 1;
+    string senderMemberId = 2;  // 초대한 memberId
+    string senderNickName = 3;  // 초대한 닉네임
+    string inviteNickName = 4;  // 초대 받은 닉네임
+    int32 otp = 5;              // 방비밀번호
+}
+
+//친구 게임 요청 응답
+message FriendGamePlayRequestAnswerToS {
+    string senderMemberId = 1;  // 초대한 memberId
+    FriendGamePlayJoinAnswerType friendGamePlayJoinAnswerType = 2;
+}
+
+message FriendGamePlayRequestAnswerToC {
+    int32 retCode = 1;
+    string inviteNickName = 2;
+    FriendGamePlayJoinAnswerType friendGamePlayJoinAnswerType = 3;
+}

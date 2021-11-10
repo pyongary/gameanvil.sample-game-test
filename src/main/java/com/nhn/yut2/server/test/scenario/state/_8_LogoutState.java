@@ -1,18 +1,18 @@
-package com.nhn.gameanvil.sample.test.scenario.state;
+package com.nhn.yut2.server.test.scenario.state;
+
+import com.nhn.gameanvil.gamehammer.scenario.State;
+import com.nhn.yut2.server.test.scenario.Yut2Actor;
+import org.slf4j.Logger;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
-import com.nhn.gameanvil.gamehammer.scenario.State;
-import com.nhn.gameanvil.sample.test.scenario.TapTapActor;
-import org.slf4j.Logger;
-
 // 로그아웃 요청 상태
-public class _8_LogoutState extends State<TapTapActor> {
+public class _8_LogoutState extends State<Yut2Actor> {
     private static final Logger logger = getLogger(_8_LogoutState.class);
 
     @Override
-    protected void onEnter(TapTapActor actor) {
-        logger.debug("TapTapActor idx[{}] - onEnter : {}", actor.getIndex(), getStateName());
+    protected void onEnter(Yut2Actor actor) {
+        logger.debug("Yut2Actor idx[{}] - onEnter : {}", actor.getIndex(), getStateName());
         actor.getUser().logout(result -> {
             if (result.isSuccess()) {
                 actor.finish(true);
@@ -31,7 +31,7 @@ public class _8_LogoutState extends State<TapTapActor> {
     }
 
     @Override
-    protected void onExit(TapTapActor actor) {
+    protected void onExit(Yut2Actor actor) {
         logger.debug("TapTapActor idx[{}] - onExit : {}", actor.getIndex(), getStateName());
     }
 
