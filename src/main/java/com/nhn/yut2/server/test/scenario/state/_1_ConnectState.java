@@ -29,7 +29,7 @@ public class _1_ConnectState extends State<Yut2Actor> {
 
     @Override
     protected void onEnter(Yut2Actor actor) {
-        logger.debug("Yut2Actor idx[{}] - onEnter : {}", actor.getIndex(), getStateName());
+        logger.info("Yut2Actor idx[{}] - onEnter : {}", actor.getIndex(), getStateName());
 
         if (actor.getConnection().isConnected()) {
             actor.changeState(_3_AuthenticationState.class);
@@ -40,7 +40,7 @@ public class _1_ConnectState extends State<Yut2Actor> {
                 if (ResultCodeConnect.CONNECT_SUCCESS == resultConnect.getResultCode()) {
                     actor.changeState(_2_RampUpState.class);
                 } else {
-                    logger.info("[{}] Fail - UUID : {}, errorCode : {}, resultCode : {}, socketException : {}, elapsedTime : {}",
+                    logger.error("[{}] Fail - UUID : {}, errorCode : {}, resultCode : {}, socketException : {}, elapsedTime : {}",
                         getStateName(),
                         actor.getConnection().getUuid(),
                         resultConnect.getErrorCode(),
@@ -56,7 +56,7 @@ public class _1_ConnectState extends State<Yut2Actor> {
 
     @Override
     protected void onExit(Yut2Actor actor) {
-        logger.debug("Yut2Actor idx[{}] - onExit : {}", actor.getIndex(), getStateName());
+        logger.info("Yut2Actor idx[{}] - onExit : {}", actor.getIndex(), getStateName());
     }
 
 }

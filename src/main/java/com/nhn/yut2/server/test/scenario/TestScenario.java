@@ -62,7 +62,7 @@ public class TestScenario {
         scenario.addState(new _3_AuthenticationState());
         scenario.addState(new _4_LoginState());
         scenario.addState(new _5_MatchRoomState());
-        scenario.addState(new _6_StartGame());
+        scenario.addState(new _6_EnterRoomState());
         scenario.addState(new _7_LeaveRoomState());
         scenario.addState(new _8_LogoutState());
 

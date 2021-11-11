@@ -1,0 +1,230 @@
+package com.nhn.yut2.server.test.scenario.state;
+
+import com.nhn.gameanvil.gamehammer.scenario.State;
+import com.nhn.gameanvil.gamehammer.tester.ResultMatchRoom;
+import com.nhn.gameanvil.gamehammer.tester.User;
+import com.nhn.yut2.server.protocol.Yut2GameProto;
+import com.nhn.yut2.server.test.common.GameConstants;
+import com.nhn.yut2.server.test.scenario.Yut2Actor;
+import org.slf4j.Logger;
+
+import java.io.IOException;
+
+import static org.junit.Assert.assertTrue;
+import static org.slf4j.LoggerFactory.getLogger;
+
+// 방생성 요청 상태
+public class _6_EnterRoomState extends State<Yut2Actor> {
+    private static final Logger logger = getLogger(_6_EnterRoomState.class);
+
+    @Override
+    protected void onEnter(Yut2Actor actor) {
+        logger.info("Yut2Actor idx[{}] - onEnter : {}", actor.getIndex(), getStateName());
+        addRoomListener(actor);
+        enterRoomAction(actor);
+    }
+
+    private void addRoomListener(Yut2Actor actor) {
+        User user = actor.getUser();
+        user.addListener(Yut2GameProto.EnterRoomToC.getDescriptor(), packetResult -> {
+            Yut2GameProto.EnterRoomToC message = null;
+            try {
+                message = Yut2GameProto.EnterRoomToC.parseFrom(packetResult.getStream());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (message != null) {
+                int hostNo = message.getRoomData().getHostSeatNo();
+                logger.info("<==EnterRoomToC[{}]: roomid={} host={}", user.getUserId(), message.getRoomData().getRoomId(), hostNo);
+
+                for (Yut2GameProto.RoomMemberInfo info : message.getRoomData().getMembersList()) {
+                    logger.info("info nickname [{}, {}] - actor nickname {}", info.getBaseInfo().getMemberId(), info.getSeatNo(), actor.nickname);
+                    if (info.getBaseInfo().getMemberId().equals(actor.nickname)) {
+                        actor.seatNo = info.getSeatNo();
+                        actor.isHost = (actor.seatNo == hostNo);
+                        logger.info("seatNo is {} - Host {}", actor.seatNo, actor.isHost);
+                    }
+                }
+
+                sendComplete(user, Yut2GameProto.ClientCompleteType.Enter_Room);
+            }
+            else logger.error("EnterRoomToC Error : {}", actor.getUser().getUserId());
+        });
+
+        user.addListener(Yut2GameProto.GameReadyCompleteNoti.getDescriptor(), packetResult -> {
+            Yut2GameProto.GameReadyCompleteNoti message = null;
+            try {
+                message = Yut2GameProto.GameReadyCompleteNoti.parseFrom(packetResult.getStream());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (message != null) OnGameReadyCompleteNoti(actor);
+            else logger.error("GameReadyCompleteNoti Error : {}", actor.getUser().getUserId());
+        });
+
+        user.addListener(Yut2GameProto.GameStartToC.getDescriptor(), packetResult -> {
+            Yut2GameProto.GameStartToC message = null;
+            try {
+                message = Yut2GameProto.GameStartToC.parseFrom(packetResult.getStream());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (message != null) OnGameStartToC(message, actor.getUser());
+            else logger.error("GameStartToC Error : {}", actor.getUser().getUserId());
+        });
+
+        user.addListener(Yut2GameProto.SelectGameLeaderToC.getDescriptor(), packetResult -> {
+            Yut2GameProto.SelectGameLeaderToC message = null;
+            try {
+                message = Yut2GameProto.SelectGameLeaderToC.parseFrom(packetResult.getStream());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (message != null) {
+                logger.info("<==SelectGameLeaderToC[{}]: seatNo={}", user.getUserId(), message.getSeatNo());
+                sendComplete(user, Yut2GameProto.ClientCompleteType.Result_Leader);
+            }
+            else logger.error("SelectGameLeaderToC Error : {}", actor.getUser().getUserId());
+        });
+
+        user.addListener(Yut2GameProto.GameInitializeNoti.getDescriptor(), packetResult -> {
+            Yut2GameProto.GameInitializeNoti message = null;
+            try {
+                message = Yut2GameProto.GameInitializeNoti.parseFrom(packetResult.getStream());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (message != null) {
+                logger.info("<==GameInitializeNoti [{}]: seatNo={}", user.getUserId());
+                sendComplete(user, Yut2GameProto.ClientCompleteType.Default_Bet);
+            }
+            else logger.error("GameInitializeNoti Error : {}", actor.getUser().getUserId());
+        });
+
+        user.addListener(Yut2GameProto.CurrentTurnNoti.getDescriptor(), packetResult -> {
+            Yut2GameProto.CurrentTurnNoti message = null;
+            try {
+                message = Yut2GameProto.CurrentTurnNoti.parseFrom(packetResult.getStream());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (message != null) {
+                OnCurrentTurnNoti(message, actor);
+            }
+            else logger.error("CurrentTurnNoti Error : {}", actor.getUser().getUserId());
+        });
+
+        user.addListener(Yut2GameProto.TossYutToC.getDescriptor(), packetResult -> {
+            Yut2GameProto.TossYutToC message = null;
+            try {
+                message = Yut2GameProto.TossYutToC.parseFrom(packetResult.getStream());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (message != null && message.getRetCode() == 0) {
+                logger.info("<==TossYutToC [{}]: seatNo={}", user.getUserId(), message.getSeatNo());
+                sendComplete(user, Yut2GameProto.ClientCompleteType.Toss_Yut);
+            }
+            else logger.error("TossYutToC Error[{}] : {}", actor.getUser().getUserId(), message.getRetCode());
+        });
+
+        user.addListener(Yut2GameProto.MovePawnToC.getDescriptor(), packetResult -> {
+            Yut2GameProto.MovePawnToC message = null;
+            try {
+                message = Yut2GameProto.MovePawnToC.parseFrom(packetResult.getStream());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (message != null && message.getRetCode() == 0) {
+                logger.info("<==MovePawnToC [{}]: seatNo={}", user.getUserId(), message.getSeatNo());
+                sendComplete(user, Yut2GameProto.ClientCompleteType.Move_Pawn);
+            }
+            else logger.error("MovePawnToC Error[{}] : {}", actor.getUser().getUserId(), message.getRetCode());
+        });
+
+        user.addListener(Yut2GameProto.GamePlayCompleteNoti.getDescriptor(), packetResult -> {
+            Yut2GameProto.GamePlayCompleteNoti message = null;
+            try {
+                message = Yut2GameProto.GamePlayCompleteNoti.parseFrom(packetResult.getStream());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (message != null) {
+                logger.info("<==GamePlayCompleteNoti [{}]: WinNo={}", user.getUserId(), message.getWinSeatNo());
+                sendComplete(user, Yut2GameProto.ClientCompleteType.Game_Result);
+                actor.changeState(_7_LeaveRoomState.class);
+            }
+            else logger.error("GamePlayCompleteNoti Error[{}]", actor.getUser().getUserId());
+        });
+    }
+
+    void enterRoomAction(Yut2Actor actor) {
+        Yut2GameProto.EnterRoomToS.Builder enterRoom = Yut2GameProto.EnterRoomToS.newBuilder();
+        actor.getUser().send(enterRoom.build());
+        logger.info("-->EnterRoomToS[{}]", actor.getUser().getUserId());
+    }
+
+    void sendComplete(User user, Yut2GameProto.ClientCompleteType type){
+        Yut2GameProto.CompleteTypeToS.Builder complete = Yut2GameProto.CompleteTypeToS.newBuilder();
+        complete.setCompleteType(type);
+        user.send(complete.build());
+        logger.info("-->CompleteTypeToS[{}]: {}", user.getUserId(), complete.getCompleteType());
+    }
+
+    void OnGameReadyCompleteNoti(Yut2Actor actor){
+        User user = actor.getUser();
+        logger.info("<==GameReadyCompleteNoti[{}]", user.getUserId());
+
+        // 선이면 시작 눌러주자
+        if (actor.isHost) {
+            Yut2GameProto.GameStartToS.Builder packet = Yut2GameProto.GameStartToS.newBuilder();
+            user.send(packet.build());
+            logger.info("-->GameStartToS[{}]", user.getUserId());
+        }
+    }
+
+    void OnGameStartToC(Yut2GameProto.GameStartToC msg, User user) {
+        logger.info("<==GameStartToC [{}] RetCode : {}", user.getUserId(), msg.getRetCode());
+        if (msg.getRetCode() == 0) {
+            if (msg.getGameLeaderSeatNo() == -1) {
+                Yut2GameProto.SelectGameLeaderToS.Builder req = Yut2GameProto.SelectGameLeaderToS.newBuilder();
+                req.setYutIndex(-1);
+                user.send(req.build());
+                logger.info("-->SelectGameLeaderToS[{}]: -1", user.getUserId());
+            }
+            else {
+                Yut2GameProto.CompleteTypeToS.Builder complete = Yut2GameProto.CompleteTypeToS.newBuilder();
+                complete.setCompleteType(Yut2GameProto.ClientCompleteType.Play_Game_Ready);
+                user.send(complete.build());
+                logger.info("-->CompleteTypeToS[{}]: {}", user.getUserId(), complete.getCompleteType());
+            }
+        }
+        else {
+            logger.error("GameStartToC [{}] RetCode : {}", user.getUserId(), msg.getRetCode());
+        }
+    }
+
+    void OnCurrentTurnNoti(Yut2GameProto.CurrentTurnNoti msg, Yut2Actor actor) {
+        User user = actor.getUser();
+        logger.info("<== CurrentTurnNoti [{}] : turn {}", user.getUserId(), msg.getSeatNo());
+        /*
+        if (actor.seatNo == msg.getSeatNo()) {
+            if (msg.getCanToss()) {
+                // Toss Yut
+                Yut2GameProto.TossYutToS.Builder req = Yut2GameProto.TossYutToS.newBuilder();
+                req.setSelectChanceIndex(-1);
+                user.send(req.build());
+                logger.info("-->TossYutToS[{}]: -1", user.getUserId());
+            } else {
+                logger.info("wait server action [{}], remain cnt : {}", actor.getUser().getUserId(), msg.getRemainPaeListCount());
+            }
+        }
+        */
+    }
+
+    @Override
+    protected void onExit(Yut2Actor actor) {
+        logger.info("Yut2Actor idx[{}] - onExit : {}", actor.getIndex(), getStateName());
+    }
+}
+

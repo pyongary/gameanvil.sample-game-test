@@ -14,7 +14,7 @@ public class _4_LoginState extends State<Yut2Actor> {
     @Override
     protected void onEnter(Yut2Actor actor) {
 
-        logger.debug("Yut2Actor idx[{}] - onEnter : {}", actor.getIndex(), getStateName());
+        logger.info("Yut2Actor idx[{}] - onEnter : {}", actor.getIndex(), getStateName());
 
         // 로그인 데이터
         Yut2GameProto.LoginToS.Builder loginReq = Yut2GameProto.LoginToS.newBuilder();
@@ -31,7 +31,7 @@ public class _4_LoginState extends State<Yut2Actor> {
             if (loginRes.isSuccess()) {
                 actor.changeState(_5_MatchRoomState.class);
             } else {
-                logger.info(
+                logger.error(
                     "[{}] Fail - uuid : {}, AccountId : {}\t{}, {}",
                     getStateName(),
                     actor.getConnection().getUuid(),
@@ -47,7 +47,7 @@ public class _4_LoginState extends State<Yut2Actor> {
 
     @Override
     protected void onExit(Yut2Actor actor) {
-        logger.debug("Yut2Actor idx[{}] - onExit : {}", actor.getIndex(), getStateName());
+        logger.info("Yut2Actor idx[{}] - onExit : {}", actor.getIndex(), getStateName());
     }
 
 }

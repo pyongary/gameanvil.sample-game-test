@@ -16,12 +16,13 @@ public class _3_AuthenticationState extends State<Yut2Actor> {
 
     @Override
     protected void onEnter(Yut2Actor actor) {
-        logger.debug("TapTapActor idx[{}] - onEnter : {}", actor.getIndex(), getStateName());
+        logger.info("Yut2Actor idx[{}] - onEnter : {}", actor.getIndex(), getStateName());
 
         // 인증 메세지 생성
         Yut2GameProto.AuthenticationToS.Builder authenticationReq = Yut2GameProto.AuthenticationToS.newBuilder().setAccessToken("test-bot");
         // Authentication.AuthenticationReq.Builder authenticationReq = Authentication.AuthenticationReq.newBuilder().setAccessToken("TapTap_AccessToken!!!!");
 
+        actor.nickname = "Bot" + actor.getConnection().getUuid();
         // 인증 요청
         actor.getConnection().authentication(authenticationResult -> {
             if (authenticationResult.isSuccess()) {
@@ -36,11 +37,11 @@ public class _3_AuthenticationState extends State<Yut2Actor> {
                 );
                 actor.finish(false);
             }
-        }, "Bot" + actor.getConnection().getUuid(), String.valueOf(actor.getConnection().getUuid()), connectionDeviceIdGenerator.generateUniqueId(), authenticationReq);
+        }, actor.nickname, String.valueOf(actor.getConnection().getUuid()), connectionDeviceIdGenerator.generateUniqueId(), authenticationReq);
     }
 
     @Override
     protected void onExit(Yut2Actor actor) {
-        logger.debug("TapTapActor idx[{}] - onExit : {}", actor.getIndex(), getStateName());
+        logger.info("Yut2Actor idx[{}] - onExit : {}", actor.getIndex(), getStateName());
     }
 }

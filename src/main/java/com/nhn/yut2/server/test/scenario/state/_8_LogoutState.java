@@ -12,12 +12,12 @@ public class _8_LogoutState extends State<Yut2Actor> {
 
     @Override
     protected void onEnter(Yut2Actor actor) {
-        logger.debug("Yut2Actor idx[{}] - onEnter : {}", actor.getIndex(), getStateName());
+        logger.info("Yut2Actor idx[{}] - onEnter : {}", actor.getIndex(), getStateName());
         actor.getUser().logout(result -> {
             if (result.isSuccess()) {
                 actor.finish(true);
             } else {
-                logger.info(
+                logger.error(
                     "[{}] Fail - uuid : {}, AccountId : {}\t{}, {}",
                     getStateName(),
                     actor.getConnection().getUuid(),
@@ -32,7 +32,7 @@ public class _8_LogoutState extends State<Yut2Actor> {
 
     @Override
     protected void onExit(Yut2Actor actor) {
-        logger.debug("TapTapActor idx[{}] - onExit : {}", actor.getIndex(), getStateName());
+        logger.info("Yut2Actor idx[{}] - onExit : {}", actor.getIndex(), getStateName());
     }
 
 }

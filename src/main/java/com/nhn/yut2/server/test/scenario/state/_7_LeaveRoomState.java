@@ -15,7 +15,7 @@ public class _7_LeaveRoomState extends State<Yut2Actor> {
 
     @Override
     protected void onEnter(Yut2Actor actor) {
-        logger.debug("Yut2Actor idx[{}] - onEnter : {}", actor.getIndex(), getStateName());
+        logger.info("Yut2Actor idx[{}] - onEnter : {}", actor.getIndex(), getStateName());
 
         // 방나가기
         Yut2GameProto.ReserveFlagToS.Builder reserveFlag = Yut2GameProto.ReserveFlagToS.newBuilder();
@@ -26,7 +26,7 @@ public class _7_LeaveRoomState extends State<Yut2Actor> {
             if (leaveRoomResult.isSuccess()) {
                 actor.changeState(_8_LogoutState.class);
             } else {
-                logger.info(
+                logger.error(
                     "[{}] Fail - uuid : {}, AccountId : {}\t{}, {}",
                     getStateName(),
                     actor.getConnection().getUuid(),
@@ -43,7 +43,7 @@ public class _7_LeaveRoomState extends State<Yut2Actor> {
 
     @Override
     protected void onExit(Yut2Actor actor) {
-        logger.debug("TapTapActor idx[{}] - onExit : {}", actor.getIndex(), getStateName());
+        logger.info("TapTapActor idx[{}] - onExit : {}", actor.getIndex(), getStateName());
     }
 
 }

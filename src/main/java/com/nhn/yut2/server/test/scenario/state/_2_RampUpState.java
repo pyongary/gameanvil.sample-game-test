@@ -21,7 +21,7 @@ public class _2_RampUpState extends State<Yut2Actor> {
 
     @Override
     protected void onEnter(Yut2Actor actor) {
-        logger.debug("TapTapActor idx[{}] - onEnter : {}", actor.getIndex(), getStateName());
+        logger.info("Yut2Actor idx[{}] - onEnter : {}", actor.getIndex(), getStateName());
         Consumer<Long> consumer = new Consumer<Long>() {
             @Override
             public void accept(Long connectionTime) {
@@ -45,6 +45,6 @@ public class _2_RampUpState extends State<Yut2Actor> {
 
     @Override
     protected void onExit(Yut2Actor actor) {
-        logger.debug("Yut2Actor idx[{}] - onExit : {}", actor.getIndex(), getStateName());
+        logger.info("Yut2Actor idx[{}] - onExit : {}", actor.getIndex(), getStateName());
     }
 }

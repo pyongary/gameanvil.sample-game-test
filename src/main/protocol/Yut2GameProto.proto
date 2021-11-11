@@ -87,6 +87,7 @@ enum EquipSlot {
     YUT_SKIN = 3;
     BADGE = 4;
     DRINK_BINGO_POINT = 5;
+    SUBSCRIPTION = 6;
 }
 
 enum PawnBuffType {
@@ -99,6 +100,12 @@ enum PawnBuffType {
     NAK_GUARANTEE = 6; // 낙 보험
     EVENTITEM_BONUS = 7; // 이벤트 아이템 추가
 }
+
+enum YutBuffType {
+    YB_NONE = 0;
+    YB_ADD_MONEY = 1;
+}
+
 
 // 유저 데이터
 message UserData {
@@ -275,6 +282,7 @@ message RoomData {
     int32 channelType = 12;
     map<int32, int32> leaderMaps = 13; // 선선택 중이면 seatNo, choiceIndex
     int32 password = 14;
+    int32 maxPlayer = 15;
 }
 
 message BingoInfo {
@@ -298,6 +306,8 @@ message RoomMemberInfo {
 message RoomOption {
     int32 channelType = 1;
     int32 pwd = 2;
+    string roomTitle = 3;       // 방 제목
+    int32 maxPlayer = 4;        // 최대 인원수
 }
 
 message JoinRoomNoti {
@@ -305,6 +315,22 @@ message JoinRoomNoti {
     string roomType = 2;
     int32 otp = 3;
     string extraData = 4;
+}
+
+message RoomListToS {
+    int32 channelType = 1;      // 시드 (채널) 구분 없음 -1
+}
+
+message RoomListData {
+    string title = 1;
+    int32 channelType = 2;
+    int32 maxPlayer = 3;
+    int32 curPlayer = 4;
+}
+
+message RoomListToC {
+    int32 channelType = 1;
+    repeated RoomListData roomList = 2;
 }
 
 // 방 입장 요청
@@ -444,6 +470,12 @@ message PawnBuffInfo {
     int64 value = 3;
 }
 
+message YutBuffInfo {
+    int32 seatNo = 1;
+    YutBuffType type = 2;
+    int64 value = 3;
+}
+
 // 윷 던지기
 message TossYutToS {
     int32 selectChanceIndex = 1; // 찬스 사용: 0 ~ 5, 미사용:-1
@@ -459,6 +491,7 @@ message TossYutToC {
     PlayerUpdateInfo updateInfo = 7;
     GameMissionProgress missionInfo = 8;
     repeated PawnBuffInfo buffList = 9;
+    repeated YutBuffInfo yutBuffList = 10;
 }
 
 message GameMissionProgressNoti {

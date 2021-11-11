@@ -12,9 +12,9 @@
     }
   ],
   "isTestLoggingEnabled": false,
-  "actorCount": 1,
+  "actorCount": 2,
   "scenarioLoopCount": 30,
-  "testTimeSeconds": 60,
+  "testTimeSeconds": 0,
   "requestTimeoutSeconds": 3,
   "pingIntervalSeconds" : 3,
   "rampUpDelayMillis": 5,

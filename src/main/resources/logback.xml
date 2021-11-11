@@ -28,7 +28,7 @@
         <appender-ref ref="FILE" />
     </appender>
 
-    <logger name="com.nhn.gameplex.sample" level="DEBUG"/>
+    <logger name="com.nhn.yut2.server" level="INFO"/>
 
     <root>
         <level value="INFO"/>
