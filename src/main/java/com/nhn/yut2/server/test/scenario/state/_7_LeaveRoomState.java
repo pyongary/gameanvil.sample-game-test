@@ -15,15 +15,19 @@ public class _7_LeaveRoomState extends State<Yut2Actor> {
 
     @Override
     protected void onEnter(Yut2Actor actor) {
-        logger.info("Yut2Actor idx[{}] - onEnter : {}", actor.getIndex(), getStateName());
+        logger.info("Yut2Actor idx[{}] - onEnter : {}", actor.getUser().getUserId(), getStateName());
 
         // 방나가기
         Yut2GameProto.ReserveFlagToS.Builder reserveFlag = Yut2GameProto.ReserveFlagToS.newBuilder();
         reserveFlag.setReserveFlag(Yut2GameProto.ReserveFlag.LeaveRoom);
 
+        // send complete
+        sendComplete(actor, Yut2GameProto.ClientCompleteType.Game_Result);
+
         // 게임 종료
         actor.getUser().leaveRoom((leaveRoomResult) -> {
             if (leaveRoomResult.isSuccess()) {
+                actor.reset();
                 actor.changeState(_8_LogoutState.class);
             } else {
                 logger.error(
@@ -34,16 +38,27 @@ public class _7_LeaveRoomState extends State<Yut2Actor> {
                     leaveRoomResult.getErrorCode(),
                     leaveRoomResult.getPacketResultCode()
                 );
-                actor.changeState(_8_LogoutState.class);
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                actor.changeState(_7_LeaveRoomState.class);
             }
         }, reserveFlag);
+    }
 
-
+    void sendComplete(Yut2Actor actor, Yut2GameProto.ClientCompleteType type){
+        Yut2GameProto.CompleteTypeToS.Builder complete = Yut2GameProto.CompleteTypeToS.newBuilder();
+        complete.setCompleteType(type);
+        actor.getUser().send(complete.build());
+        logger.info("-->CompleteTypeToS[{}]: {}", actor.getNickname(), complete.getCompleteType());
     }
 
     @Override
     protected void onExit(Yut2Actor actor) {
-        logger.info("TapTapActor idx[{}] - onExit : {}", actor.getIndex(), getStateName());
+        logger.info("Yut2Actor idx[{}] - onExit : {}", actor.getIndex(), getStateName());
     }
 
 }

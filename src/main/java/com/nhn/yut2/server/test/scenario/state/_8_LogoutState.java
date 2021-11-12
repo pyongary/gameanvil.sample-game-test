@@ -32,7 +32,7 @@ public class _8_LogoutState extends State<Yut2Actor> {
 
     @Override
     protected void onExit(Yut2Actor actor) {
-        logger.info("Yut2Actor idx[{}] - onExit : {}", actor.getIndex(), getStateName());
+        logger.info("Yut2Actor idx[{}] - onExit : {}", actor.getUser().getUserId(), getStateName());
     }
 
 }

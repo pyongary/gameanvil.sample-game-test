@@ -8,7 +8,7 @@ public class Yut2Actor extends ScenarioActor<Yut2Actor> {
     private User user;
     public int seatNo;
     public boolean isHost = false;
-    public String nickname;
+    public boolean isPlay = false;
 
     public User getUser() {
         return user;
@@ -16,5 +16,14 @@ public class Yut2Actor extends ScenarioActor<Yut2Actor> {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getNickname() {
+        return this.getConnection().getAccountId();
+    }
+
+    public void reset() {
+        isHost = false;
+        isPlay = false;
     }
 }

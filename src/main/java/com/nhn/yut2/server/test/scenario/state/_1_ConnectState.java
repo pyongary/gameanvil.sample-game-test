@@ -17,7 +17,7 @@ public class _1_ConnectState extends State<Yut2Actor> {
     protected void onScenarioTestStart(Yut2Actor scenarioActor) {
         // 서버에서 연결이 끊겼을때 처리
         scenarioActor.getConnection().addListenerDisconnect((resultDisconnect) -> {
-            logger.info("[{}] Disconnected - UUID : {}",
+            logger.warn("[{}] Disconnected - UUID : {}",
                 scenarioActor.getCurrentStateName(),
                 scenarioActor.getConnection().getUuid()
             );

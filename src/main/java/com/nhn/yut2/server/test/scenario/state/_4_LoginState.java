@@ -1,10 +1,13 @@
 package com.nhn.yut2.server.test.scenario.state;
 
 import com.nhn.gameanvil.gamehammer.scenario.State;
+import com.nhn.gameanvil.gamehammer.tester.Packet;
 import com.nhn.yut2.server.protocol.Yut2GameProto;
 import com.nhn.yut2.server.test.common.GameConstants;
 import com.nhn.yut2.server.test.scenario.Yut2Actor;
 import org.slf4j.Logger;
+
+import java.io.IOException;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -29,8 +32,23 @@ public class _4_LoginState extends State<Yut2Actor> {
 
         actor.getUser().login(loginRes -> {
             if (loginRes.isSuccess()) {
-                actor.changeState(_5_MatchRoomState.class);
+                if (loginRes.getRejoinedRoomId() > 0) {
+                    // 방입장
+                    logger.info("Yut2Actor Nick[{}] - Already Game Room", actor.getNickname());
+                }
+                else {
+                    // matchroom
+                    actor.changeState(_5_MatchRoomState.class);
+                }
             } else {
+                /*
+                try {
+                    Packet payload = loginRes.getPacketFromPayload(Yut2GameProto.LoginToC.getDescriptor());
+                    Yut2GameProto.LoginToC loginInfo = Yut2GameProto.LoginToC.parseFrom(payload.getStream());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                */
                 logger.error(
                     "[{}] Fail - uuid : {}, AccountId : {}\t{}, {}",
                     getStateName(),
@@ -42,7 +60,6 @@ public class _4_LoginState extends State<Yut2Actor> {
                 actor.finish(false);
             }
         }, GameConstants.GAME_USER_TYPE, actor.getUser().getChannelId(), loginReq);
-        // GameConstants.GAME_USER_TYPE, TesterConfigLoader.getInstance().getTesterConfig().getServiceInfo(GameConstants.GAME_NAME).(), loginReq);
     }
 
     @Override

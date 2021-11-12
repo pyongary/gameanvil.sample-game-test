@@ -20,9 +20,8 @@ public class _3_AuthenticationState extends State<Yut2Actor> {
 
         // 인증 메세지 생성
         Yut2GameProto.AuthenticationToS.Builder authenticationReq = Yut2GameProto.AuthenticationToS.newBuilder().setAccessToken("test-bot");
-        // Authentication.AuthenticationReq.Builder authenticationReq = Authentication.AuthenticationReq.newBuilder().setAccessToken("TapTap_AccessToken!!!!");
 
-        actor.nickname = "Bot" + actor.getConnection().getUuid();
+        String nickname = "Bot" + actor.getConnection().getUuid();
         // 인증 요청
         actor.getConnection().authentication(authenticationResult -> {
             if (authenticationResult.isSuccess()) {
@@ -30,14 +29,15 @@ public class _3_AuthenticationState extends State<Yut2Actor> {
             } else {
                 logger.info("[{}] Fail - uuid : {}, AccountId : {} \t{}, {}",
                     getStateName(),
-                    actor.getConnection().getUuid(),
+                    nickname,
                     actor.getConnection().getUuid(),
                     authenticationResult.getErrorCode(),
                     authenticationResult.getResultCode()
                 );
                 actor.finish(false);
             }
-        }, actor.nickname, String.valueOf(actor.getConnection().getUuid()), connectionDeviceIdGenerator.generateUniqueId(), authenticationReq);
+        }, nickname, String.valueOf(actor.getConnection().getUuid()), "DeviceID:" + actor.getConnection().getUuid()/*connectionDeviceIdGenerator.generateUniqueId()*/, authenticationReq);
+
     }
 
     @Override
