@@ -9,6 +9,9 @@ public class Yut2Actor extends ScenarioActor<Yut2Actor> {
     public int seatNo;
     public boolean isHost = false;
     public boolean isPlay = false;
+    public boolean isListenerResisted = false;
+    public int waitCount = 0;
+    // public Timer timer;
 
     public User getUser() {
         return user;
@@ -25,5 +28,6 @@ public class Yut2Actor extends ScenarioActor<Yut2Actor> {
     public void reset() {
         isHost = false;
         isPlay = false;
+        waitCount = 0;
     }
 }

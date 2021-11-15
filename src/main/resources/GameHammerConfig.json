@@ -1,8 +1,9 @@
 {
   "targetServerList": [
     {
-      "ip": "dev-sinyutnori2.hangame.com",
-      "port": 11300
+      // "ip": "dev-sinyutnori2.hangame.com",
+      "ip": "10.77.35.159",
+      "port": 11200
     }
   ],
   "serviceList" : [
@@ -12,10 +13,10 @@
     }
   ],
   "isTestLoggingEnabled": false,
-  "actorCount": 2,
-  "scenarioLoopCount": 3,
+  "actorCount": 20,
+  "scenarioLoopCount": 2,
   "testTimeSeconds": 0,
-  "requestTimeoutSeconds": 3,
+  "requestTimeoutSeconds": 10,
   "pingIntervalSeconds" : 3,
   "rampUpDelayMillis": 1000,
   "networkThreadCount": 16,
