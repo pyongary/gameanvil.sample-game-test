@@ -12,7 +12,7 @@
     }
   ],
   "isTestLoggingEnabled": false,
-  "actorCount": 3,
+  "actorCount": 2,
   "scenarioLoopCount": 3,
   "testTimeSeconds": 0,
   "requestTimeoutSeconds": 3,

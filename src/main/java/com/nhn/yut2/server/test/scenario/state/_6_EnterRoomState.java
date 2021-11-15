@@ -183,7 +183,7 @@ public class _6_EnterRoomState extends State<Yut2Actor> {
         Yut2GameProto.CompleteTypeToS.Builder complete = Yut2GameProto.CompleteTypeToS.newBuilder();
         complete.setCompleteType(type);
         actor.getUser().send(complete.build());
-        // logger.info("-->CompleteTypeToS[{}]: {}", actor.getNickname(), complete.getCompleteType());
+        logger.info("-->CompleteTypeToS[{}]: {}", actor.getNickname(), complete.getCompleteType());
     }
 
     void OnGameReadyCompleteNoti(Yut2Actor actor){

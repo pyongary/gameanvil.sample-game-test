@@ -33,8 +33,12 @@ public class _4_LoginState extends State<Yut2Actor> {
         actor.getUser().login(loginRes -> {
             if (loginRes.isSuccess()) {
                 if (loginRes.getRejoinedRoomId() > 0) {
-                    // 방입장
+                    // Continue Game
                     logger.info("Yut2Actor Nick[{}] - Already Game Room", actor.getNickname());
+                    Yut2GameProto.ReserveFlagToS.Builder req = Yut2GameProto.ReserveFlagToS.newBuilder();
+                    req.setReserveFlag(Yut2GameProto.ReserveFlag.MobileResume);
+                    actor.getUser().send(req.build());
+                    actor.changeState(_6_EnterRoomState.class);
                 }
                 else {
                     // matchroom
