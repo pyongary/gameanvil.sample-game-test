@@ -123,8 +123,8 @@ public class _6_EnterRoomState extends State<Yut2Actor> {
         }
         if (message != null) {
             User user = actor.getUser();
-            logger.info("<==GameStartToC [{}-{}] RetCode : {}",  actor.getIndex(), actor.getNickname(), message.getRetCode());
             if (message.getRetCode() == 0) {
+                logger.info("<==GameStartToC [{}-{}] RetCode : {}",  actor.getIndex(), actor.getNickname(), message.getRetCode());
                 actor.isPlay = true;
                 if (message.getGameLeaderSeatNo() == -1) {
                     Yut2GameProto.SelectGameLeaderToS.Builder req = Yut2GameProto.SelectGameLeaderToS.newBuilder();
@@ -136,7 +136,9 @@ public class _6_EnterRoomState extends State<Yut2Actor> {
                     sendComplete(actor, Yut2GameProto.ClientCompleteType.Play_Game_Ready);
                 }
             }
-            else logger.error("GameStartToC [{}] RetCode : {}", actor.getNickname(), message.getRetCode());
+            else if (message.getRetCode() != 3003){
+                logger.error("GameStartToC [{}] RetCode : {}", actor.getNickname(), message.getRetCode());
+            }
         }
         else logger.error("GameStartToC Error : {}", actor.getNickname());
     }
