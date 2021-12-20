@@ -75,13 +75,13 @@ public class Fixture {
     }
 
     // 테스터 생성
-    protected static void initConnector(String ipAddress, int port) {
+    protected static void initConnector(String ipAddress, int port, boolean useSecureSocket) {
         if (null != tester) {
             tester.close();
         }
 
         tester = Tester.newBuilder()
-                .addRemoteInfo(new RemoteInfo(ipAddress, port))
+                .addRemoteInfo(new RemoteInfo(ipAddress, port, useSecureSocket))
                 .setDefaultPacketTimeoutSeconds(3)
                 .addProtoBufClass(0, Yut2GameProto.getDescriptor())
                 .Build();

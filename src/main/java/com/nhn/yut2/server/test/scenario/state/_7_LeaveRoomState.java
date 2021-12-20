@@ -24,12 +24,11 @@ public class _7_LeaveRoomState extends State<Yut2Actor> {
             sendComplete(actor, Yut2GameProto.ClientCompleteType.Game_Result);
         }
 
-        actor.reset();
-
         // 게임 종료
         actor.getUser().leaveRoom((leaveRoomResult) -> {
             if (leaveRoomResult.isSuccess()) {
-                actor.changeState(_8_LogoutState.class);
+                // actor.changeState(_8_LogoutState.class);
+                actor.changeState(_9_RoomListState.class);
             } else {
                 logger.error(
                     "[{}] Fail - uuid : {}, AccountId : {}\t{}, {}",

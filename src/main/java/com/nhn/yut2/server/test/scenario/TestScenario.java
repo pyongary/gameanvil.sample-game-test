@@ -65,6 +65,7 @@ public class TestScenario {
         scenario.addState(new _6_EnterRoomState());
         scenario.addState(new _7_LeaveRoomState());
         scenario.addState(new _8_LogoutState());
+        scenario.addState(new _9_RoomListState());
 
         return scenario;
     }

@@ -9,7 +9,8 @@ public class Yut2Actor extends ScenarioActor<Yut2Actor> {
     public int seatNo;
     public boolean isHost = false;
     public boolean isPlay = false;
-    public boolean isListenerResisted = false;
+    public boolean isRoomListenerRegistered = false;
+    public boolean isChannelListenerRegistered = false;
     public int waitCount = 0;
     // public Timer timer;
 

@@ -22,7 +22,7 @@ enum PaeType {
     YYUT = 3;
     MO = 4;
     BACKDO = 5;
-    NACK = 6;
+    NAK = 6;
 }
 
 enum PawnStateCode {
@@ -326,6 +326,7 @@ message RoomListData {
     int32 channelType = 2;
     int32 maxPlayer = 3;
     int32 curPlayer = 4;
+    int32 roomId = 5;
 }
 
 message RoomListToC {

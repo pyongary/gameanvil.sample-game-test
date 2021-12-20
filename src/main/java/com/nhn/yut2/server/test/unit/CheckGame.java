@@ -27,7 +27,7 @@ public class CheckGame extends Fixture {
     public static void beforeClass() {
         // 테스트 하려는 서버의 IP 와 Port 를 지정합니다.
         // initConnector("dev-sinyutnori2.hangame.com", 11300);
-        initConnector("133.186.142.94", 11300);
+        initConnector("133.186.142.94", 11300, true);
     }
 
     @AfterClass

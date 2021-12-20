@@ -278,9 +278,9 @@ public final class Yut2GameProto {
      */
     BACKDO(5),
     /**
-     * <code>NACK = 6;</code>
+     * <code>NAK = 6;</code>
      */
-    NACK(6),
+    NAK(6),
     UNRECOGNIZED(-1),
     ;
 
@@ -309,9 +309,9 @@ public final class Yut2GameProto {
      */
     public static final int BACKDO_VALUE = 5;
     /**
-     * <code>NACK = 6;</code>
+     * <code>NAK = 6;</code>
      */
-    public static final int NACK_VALUE = 6;
+    public static final int NAK_VALUE = 6;
 
 
     public final int getNumber() {
@@ -338,7 +338,7 @@ public final class Yut2GameProto {
         case 3: return YYUT;
         case 4: return MO;
         case 5: return BACKDO;
-        case 6: return NACK;
+        case 6: return NAK;
         default: return null;
       }
     }
@@ -29062,6 +29062,11 @@ public final class Yut2GameProto {
      * <code>int32 curPlayer = 4;</code>
      */
     int getCurPlayer();
+
+    /**
+     * <code>int32 roomId = 5;</code>
+     */
+    int getRoomId();
   }
   /**
    * Protobuf type {@code com.nhn.yut2.server.protocol.RoomListData}
@@ -29080,6 +29085,7 @@ public final class Yut2GameProto {
       channelType_ = 0;
       maxPlayer_ = 0;
       curPlayer_ = 0;
+      roomId_ = 0;
     }
 
     @java.lang.Override
@@ -29125,6 +29131,11 @@ public final class Yut2GameProto {
             case 32: {
 
               curPlayer_ = input.readInt32();
+              break;
+            }
+            case 40: {
+
+              roomId_ = input.readInt32();
               break;
             }
             default: {
@@ -29220,6 +29231,15 @@ public final class Yut2GameProto {
       return curPlayer_;
     }
 
+    public static final int ROOMID_FIELD_NUMBER = 5;
+    private int roomId_;
+    /**
+     * <code>int32 roomId = 5;</code>
+     */
+    public int getRoomId() {
+      return roomId_;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -29246,6 +29266,9 @@ public final class Yut2GameProto {
       if (curPlayer_ != 0) {
         output.writeInt32(4, curPlayer_);
       }
+      if (roomId_ != 0) {
+        output.writeInt32(5, roomId_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -29269,6 +29292,10 @@ public final class Yut2GameProto {
       if (curPlayer_ != 0) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(4, curPlayer_);
+      }
+      if (roomId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(5, roomId_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -29294,6 +29321,8 @@ public final class Yut2GameProto {
           == other.getMaxPlayer());
       result = result && (getCurPlayer()
           == other.getCurPlayer());
+      result = result && (getRoomId()
+          == other.getRoomId());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -29313,6 +29342,8 @@ public final class Yut2GameProto {
       hash = (53 * hash) + getMaxPlayer();
       hash = (37 * hash) + CURPLAYER_FIELD_NUMBER;
       hash = (53 * hash) + getCurPlayer();
+      hash = (37 * hash) + ROOMID_FIELD_NUMBER;
+      hash = (53 * hash) + getRoomId();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -29454,6 +29485,8 @@ public final class Yut2GameProto {
 
         curPlayer_ = 0;
 
+        roomId_ = 0;
+
         return this;
       }
 
@@ -29484,6 +29517,7 @@ public final class Yut2GameProto {
         result.channelType_ = channelType_;
         result.maxPlayer_ = maxPlayer_;
         result.curPlayer_ = curPlayer_;
+        result.roomId_ = roomId_;
         onBuilt();
         return result;
       }
@@ -29544,6 +29578,9 @@ public final class Yut2GameProto {
         }
         if (other.getCurPlayer() != 0) {
           setCurPlayer(other.getCurPlayer());
+        }
+        if (other.getRoomId() != 0) {
+          setRoomId(other.getRoomId());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -29717,6 +29754,32 @@ public final class Yut2GameProto {
       public Builder clearCurPlayer() {
         
         curPlayer_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int roomId_ ;
+      /**
+       * <code>int32 roomId = 5;</code>
+       */
+      public int getRoomId() {
+        return roomId_;
+      }
+      /**
+       * <code>int32 roomId = 5;</code>
+       */
+      public Builder setRoomId(int value) {
+        
+        roomId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 roomId = 5;</code>
+       */
+      public Builder clearRoomId() {
+        
+        roomId_ = 0;
         onChanged();
         return this;
       }
@@ -104262,316 +104325,316 @@ public final class Yut2GameProto {
       "oomTitle\030\003 \001(\t\022\021\n\tmaxPlayer\030\004 \001(\005\"Q\n\014Joi" +
       "nRoomNoti\022\017\n\007retCode\030\001 \001(\005\022\020\n\010roomType\030\002" +
       " \001(\t\022\013\n\003otp\030\003 \001(\005\022\021\n\textraData\030\004 \001(\t\"\"\n\013" +
-      "RoomListToS\022\023\n\013channelType\030\001 \001(\005\"X\n\014Room" +
+      "RoomListToS\022\023\n\013channelType\030\001 \001(\005\"h\n\014Room" +
       "ListData\022\r\n\005title\030\001 \001(\t\022\023\n\013channelType\030\002" +
       " \001(\005\022\021\n\tmaxPlayer\030\003 \001(\005\022\021\n\tcurPlayer\030\004 \001" +
-      "(\005\"`\n\013RoomListToC\022\023\n\013channelType\030\001 \001(\005\022<" +
-      "\n\010roomList\030\002 \003(\0132*.com.nhn.yut2.server.p" +
-      "rotocol.RoomListData\"\016\n\014EnterRoomToS\"Y\n\014" +
-      "EnterRoomToC\022\017\n\007retCode\030\001 \001(\005\0228\n\010roomDat" +
-      "a\030\002 \001(\0132&.com.nhn.yut2.server.protocol.R" +
-      "oomData\"Y\n\026JoinRoomMemberInfoNoti\022?\n\tnew" +
-      "Member\030\001 \001(\0132,.com.nhn.yut2.server.proto" +
-      "col.RoomMemberInfo\"d\n\016ReserveFlagToS\022>\n\013" +
-      "reserveFlag\030\001 \001(\0162).com.nhn.yut2.server." +
-      "protocol.ReserveFlag\022\022\n\nextraValue\030\002 \001(\003" +
-      "\"\236\001\n\016ReserveFlagToC\022\017\n\007retCode\030\001 \001(\005\022\025\n\r" +
-      "reserveSeatNo\030\002 \001(\005\022\020\n\010memberId\030\003 \001(\t\022>\n" +
-      "\013reserveFlag\030\004 \001(\0162).com.nhn.yut2.server" +
-      ".protocol.ReserveFlag\022\022\n\nextraValue\030\005 \001(" +
-      "\003\"R\n\rLeaveRoomNoti\022\023\n\013leaveSeatNo\030\001 \001(\005\022" +
-      "\022\n\nhostSeatNo\030\002 \001(\005\022\030\n\020gameLeaderSeatNo\030" +
-      "\003 \001(\005\"7\n\022ForceLeaveRoomNoti\022\017\n\007retCode\030\001" +
-      " \001(\005\022\020\n\010ret_val1\030\002 \001(\003\"Y\n\017CompleteTypeTo" +
-      "S\022F\n\014completeType\030\001 \001(\01620.com.nhn.yut2.s" +
-      "erver.protocol.ClientCompleteType\"\027\n\025Gam" +
-      "eReadyCompleteNoti\"\016\n\014GameStartToS\"9\n\014Ga" +
-      "meStartToC\022\017\n\007retCode\030\001 \001(\005\022\030\n\020gameLeade" +
-      "rSeatNo\030\002 \001(\005\"Z\n\016HiddenPawnInfo\022\016\n\006pawnI" +
-      "d\030\002 \001(\005\0228\n\010warpType\030\003 \001(\0162&.com.nhn.yut2" +
-      ".server.protocol.WarpType\"\202\001\n\020PlayerUpda" +
-      "teInfo\022\016\n\006seatNo\030\001 \001(\005\022\022\n\ndeltaMoney\030\002 \001" +
-      "(\003\022\022\n\nfinalMoney\030\003 \001(\003\022\021\n\tgamePoint\030\004 \001(" +
-      "\003\022\021\n\tfuryGauge\030\005 \001(\005\022\020\n\010furyMode\030\006 \001(\010\"\370" +
-      "\001\n\022GameInitializeNoti\022I\n\021playerUpdateInf" +
-      "os\030\001 \003(\0132..com.nhn.yut2.server.protocol." +
-      "PlayerUpdateInfo\022\021\n\tmissionId\030\002 \001(\005\022D\n\016h" +
-      "iddenPawnInfo\030\003 \001(\0132,.com.nhn.yut2.serve" +
-      "r.protocol.HiddenPawnInfo\022>\n\rgenerateIte" +
-      "ms\030\004 \003(\0132\'.com.nhn.yut2.server.protocol." +
-      "BoardItem\"\'\n\023SelectGameLeaderToS\022\020\n\010yutI" +
-      "ndex\030\001 \001(\005\"H\n\023SelectGameLeaderToC\022\017\n\007ret" +
-      "Code\030\001 \001(\005\022\016\n\006seatNo\030\002 \001(\005\022\020\n\010yutIndex\030\003" +
-      " \001(\005\"8\n\024ResultGameLeaderNoti\022\016\n\006seatNo\030\001" +
-      " \001(\005\022\020\n\010yutIndex\030\002 \001(\005\"r\n\017FreeBettingInf" +
-      "o\022;\n\004type\030\001 \001(\0162-.com.nhn.yut2.server.pr" +
-      "otocol.FreeBettingType\022\020\n\010betMoney\030\002 \001(\003" +
-      "\022\020\n\010isEnable\030\003 \001(\010\"\377\002\n\017CurrentTurnNoti\022\016" +
-      "\n\006seatNo\030\001 \001(\005\022\021\n\tisFreeBet\030\002 \001(\010\022G\n\020fre" +
-      "eBettingInfos\030\003 \003(\0132-.com.nhn.yut2.serve" +
-      "r.protocol.FreeBettingInfo\022\031\n\021remainChan" +
-      "ceCount\030\004 \001(\005\022\024\n\014currentRound\030\005 \001(\005\022\017\n\007c" +
-      "anToss\030\006 \001(\010\022<\n\rremainPaeList\030\007 \003(\0162%.co" +
-      "m.nhn.yut2.server.protocol.PaeType\022<\n\013re" +
-      "mainItems\030\010 \003(\0132\'.com.nhn.yut2.server.pr" +
-      "otocol.BoardItem\022B\n\nupdateInfo\030\t \001(\0132..c" +
-      "om.nhn.yut2.server.protocol.PlayerUpdate" +
-      "Info\"g\n\014PawnBuffInfo\022\016\n\006seatNo\030\001 \001(\005\0228\n\004" +
-      "type\030\002 \001(\0162*.com.nhn.yut2.server.protoco" +
-      "l.PawnBuffType\022\r\n\005value\030\003 \001(\003\"e\n\013YutBuff" +
-      "Info\022\016\n\006seatNo\030\001 \001(\005\0227\n\004type\030\002 \001(\0162).com" +
-      ".nhn.yut2.server.protocol.YutBuffType\022\r\n" +
-      "\005value\030\003 \001(\003\"\'\n\nTossYutToS\022\031\n\021selectChan" +
-      "ceIndex\030\001 \001(\005\"\273\003\n\nTossYutToC\022\017\n\007retCode\030" +
-      "\001 \001(\005\022\016\n\006seatNo\030\002 \001(\005\0222\n\003pae\030\003 \001(\0162%.com" +
-      ".nhn.yut2.server.protocol.PaeType\022\030\n\020fre" +
-      "eBettingGauge\030\004 \001(\005\022\031\n\021selectChanceIndex" +
-      "\030\005 \001(\005\022\031\n\021remainChanceCount\030\006 \001(\005\022B\n\nupd" +
-      "ateInfo\030\007 \001(\0132..com.nhn.yut2.server.prot" +
-      "ocol.PlayerUpdateInfo\022F\n\013missionInfo\030\010 \001" +
-      "(\01321.com.nhn.yut2.server.protocol.GameMi" +
-      "ssionProgress\022<\n\010buffList\030\t \003(\0132*.com.nh" +
-      "n.yut2.server.protocol.PawnBuffInfo\022>\n\013y" +
-      "utBuffList\030\n \003(\0132).com.nhn.yut2.server.p" +
-      "rotocol.YutBuffInfo\"a\n\027GameMissionProgre" +
-      "ssNoti\022F\n\013missionInfo\030\001 \001(\01321.com.nhn.yu" +
-      "t2.server.protocol.GameMissionProgress\"i" +
-      "\n\013MovePawnToS\0222\n\003pae\030\001 \001(\0162%.com.nhn.yut" +
-      "2.server.protocol.PaeType\022\023\n\013fromPlaceNo" +
-      "\030\002 \001(\005\022\021\n\ttoPlaceNo\030\003 \001(\005\"\346\004\n\013MovePawnTo" +
-      "C\022\017\n\007retCode\030\001 \001(\005\022\016\n\006seatNo\030\002 \001(\005\0226\n\007pa" +
-      "eType\030\003 \001(\0162%.com.nhn.yut2.server.protoc" +
-      "ol.PaeType\022\023\n\013fromPlaceNo\030\004 \001(\005\022\021\n\ttoPla" +
-      "ceNo\030\005 \001(\005\022\030\n\020catchPawnIndexes\030\006 \003(\005\022C\n\013" +
-      "updateInfos\030\007 \003(\0132..com.nhn.yut2.server." +
+      "(\005\022\016\n\006roomId\030\005 \001(\005\"`\n\013RoomListToC\022\023\n\013cha" +
+      "nnelType\030\001 \001(\005\022<\n\010roomList\030\002 \003(\0132*.com.n" +
+      "hn.yut2.server.protocol.RoomListData\"\016\n\014" +
+      "EnterRoomToS\"Y\n\014EnterRoomToC\022\017\n\007retCode\030" +
+      "\001 \001(\005\0228\n\010roomData\030\002 \001(\0132&.com.nhn.yut2.s" +
+      "erver.protocol.RoomData\"Y\n\026JoinRoomMembe" +
+      "rInfoNoti\022?\n\tnewMember\030\001 \001(\0132,.com.nhn.y" +
+      "ut2.server.protocol.RoomMemberInfo\"d\n\016Re" +
+      "serveFlagToS\022>\n\013reserveFlag\030\001 \001(\0162).com." +
+      "nhn.yut2.server.protocol.ReserveFlag\022\022\n\n" +
+      "extraValue\030\002 \001(\003\"\236\001\n\016ReserveFlagToC\022\017\n\007r" +
+      "etCode\030\001 \001(\005\022\025\n\rreserveSeatNo\030\002 \001(\005\022\020\n\010m" +
+      "emberId\030\003 \001(\t\022>\n\013reserveFlag\030\004 \001(\0162).com" +
+      ".nhn.yut2.server.protocol.ReserveFlag\022\022\n" +
+      "\nextraValue\030\005 \001(\003\"R\n\rLeaveRoomNoti\022\023\n\013le" +
+      "aveSeatNo\030\001 \001(\005\022\022\n\nhostSeatNo\030\002 \001(\005\022\030\n\020g" +
+      "ameLeaderSeatNo\030\003 \001(\005\"7\n\022ForceLeaveRoomN" +
+      "oti\022\017\n\007retCode\030\001 \001(\005\022\020\n\010ret_val1\030\002 \001(\003\"Y" +
+      "\n\017CompleteTypeToS\022F\n\014completeType\030\001 \001(\0162" +
+      "0.com.nhn.yut2.server.protocol.ClientCom" +
+      "pleteType\"\027\n\025GameReadyCompleteNoti\"\016\n\014Ga" +
+      "meStartToS\"9\n\014GameStartToC\022\017\n\007retCode\030\001 " +
+      "\001(\005\022\030\n\020gameLeaderSeatNo\030\002 \001(\005\"Z\n\016HiddenP" +
+      "awnInfo\022\016\n\006pawnId\030\002 \001(\005\0228\n\010warpType\030\003 \001(" +
+      "\0162&.com.nhn.yut2.server.protocol.WarpTyp" +
+      "e\"\202\001\n\020PlayerUpdateInfo\022\016\n\006seatNo\030\001 \001(\005\022\022" +
+      "\n\ndeltaMoney\030\002 \001(\003\022\022\n\nfinalMoney\030\003 \001(\003\022\021" +
+      "\n\tgamePoint\030\004 \001(\003\022\021\n\tfuryGauge\030\005 \001(\005\022\020\n\010" +
+      "furyMode\030\006 \001(\010\"\370\001\n\022GameInitializeNoti\022I\n" +
+      "\021playerUpdateInfos\030\001 \003(\0132..com.nhn.yut2." +
+      "server.protocol.PlayerUpdateInfo\022\021\n\tmiss" +
+      "ionId\030\002 \001(\005\022D\n\016hiddenPawnInfo\030\003 \001(\0132,.co" +
+      "m.nhn.yut2.server.protocol.HiddenPawnInf" +
+      "o\022>\n\rgenerateItems\030\004 \003(\0132\'.com.nhn.yut2." +
+      "server.protocol.BoardItem\"\'\n\023SelectGameL" +
+      "eaderToS\022\020\n\010yutIndex\030\001 \001(\005\"H\n\023SelectGame" +
+      "LeaderToC\022\017\n\007retCode\030\001 \001(\005\022\016\n\006seatNo\030\002 \001" +
+      "(\005\022\020\n\010yutIndex\030\003 \001(\005\"8\n\024ResultGameLeader" +
+      "Noti\022\016\n\006seatNo\030\001 \001(\005\022\020\n\010yutIndex\030\002 \001(\005\"r" +
+      "\n\017FreeBettingInfo\022;\n\004type\030\001 \001(\0162-.com.nh" +
+      "n.yut2.server.protocol.FreeBettingType\022\020" +
+      "\n\010betMoney\030\002 \001(\003\022\020\n\010isEnable\030\003 \001(\010\"\377\002\n\017C" +
+      "urrentTurnNoti\022\016\n\006seatNo\030\001 \001(\005\022\021\n\tisFree" +
+      "Bet\030\002 \001(\010\022G\n\020freeBettingInfos\030\003 \003(\0132-.co" +
+      "m.nhn.yut2.server.protocol.FreeBettingIn" +
+      "fo\022\031\n\021remainChanceCount\030\004 \001(\005\022\024\n\014current" +
+      "Round\030\005 \001(\005\022\017\n\007canToss\030\006 \001(\010\022<\n\rremainPa" +
+      "eList\030\007 \003(\0162%.com.nhn.yut2.server.protoc" +
+      "ol.PaeType\022<\n\013remainItems\030\010 \003(\0132\'.com.nh" +
+      "n.yut2.server.protocol.BoardItem\022B\n\nupda" +
+      "teInfo\030\t \001(\0132..com.nhn.yut2.server.proto" +
+      "col.PlayerUpdateInfo\"g\n\014PawnBuffInfo\022\016\n\006" +
+      "seatNo\030\001 \001(\005\0228\n\004type\030\002 \001(\0162*.com.nhn.yut" +
+      "2.server.protocol.PawnBuffType\022\r\n\005value\030" +
+      "\003 \001(\003\"e\n\013YutBuffInfo\022\016\n\006seatNo\030\001 \001(\005\0227\n\004" +
+      "type\030\002 \001(\0162).com.nhn.yut2.server.protoco" +
+      "l.YutBuffType\022\r\n\005value\030\003 \001(\003\"\'\n\nTossYutT" +
+      "oS\022\031\n\021selectChanceIndex\030\001 \001(\005\"\273\003\n\nTossYu" +
+      "tToC\022\017\n\007retCode\030\001 \001(\005\022\016\n\006seatNo\030\002 \001(\005\0222\n" +
+      "\003pae\030\003 \001(\0162%.com.nhn.yut2.server.protoco" +
+      "l.PaeType\022\030\n\020freeBettingGauge\030\004 \001(\005\022\031\n\021s" +
+      "electChanceIndex\030\005 \001(\005\022\031\n\021remainChanceCo" +
+      "unt\030\006 \001(\005\022B\n\nupdateInfo\030\007 \001(\0132..com.nhn." +
+      "yut2.server.protocol.PlayerUpdateInfo\022F\n" +
+      "\013missionInfo\030\010 \001(\01321.com.nhn.yut2.server" +
+      ".protocol.GameMissionProgress\022<\n\010buffLis" +
+      "t\030\t \003(\0132*.com.nhn.yut2.server.protocol.P" +
+      "awnBuffInfo\022>\n\013yutBuffList\030\n \003(\0132).com.n" +
+      "hn.yut2.server.protocol.YutBuffInfo\"a\n\027G" +
+      "ameMissionProgressNoti\022F\n\013missionInfo\030\001 " +
+      "\001(\01321.com.nhn.yut2.server.protocol.GameM" +
+      "issionProgress\"i\n\013MovePawnToS\0222\n\003pae\030\001 \001" +
+      "(\0162%.com.nhn.yut2.server.protocol.PaeTyp" +
+      "e\022\023\n\013fromPlaceNo\030\002 \001(\005\022\021\n\ttoPlaceNo\030\003 \001(" +
+      "\005\"\346\004\n\013MovePawnToC\022\017\n\007retCode\030\001 \001(\005\022\016\n\006se" +
+      "atNo\030\002 \001(\005\0226\n\007paeType\030\003 \001(\0162%.com.nhn.yu" +
+      "t2.server.protocol.PaeType\022\023\n\013fromPlaceN" +
+      "o\030\004 \001(\005\022\021\n\ttoPlaceNo\030\005 \001(\005\022\030\n\020catchPawnI" +
+      "ndexes\030\006 \003(\005\022C\n\013updateInfos\030\007 \003(\0132..com." +
+      "nhn.yut2.server.protocol.PlayerUpdateInf" +
+      "o\022\027\n\017diePlayerSeatNo\030\010 \001(\005\022;\n\ncatchItems" +
+      "\030\t \003(\0132\'.com.nhn.yut2.server.protocol.Bo" +
+      "ardItem\022\022\n\nisBaseSpot\030\n \001(\010\022\027\n\017pawnPenal" +
+      "tyWarn\030\013 \001(\010\022\031\n\021marvelPenaltyWarn\030\014 \001(\010\022" +
+      ":\n\tbingoInfo\030\r \001(\0132\'.com.nhn.yut2.server" +
+      ".protocol.BingoInfo\022\027\n\017movePawnIndexes\030\016" +
+      " \003(\005\022<\n\010buffList\030\017 \003(\0132*.com.nhn.yut2.se" +
+      "rver.protocol.PawnBuffInfo\022F\n\013missionInf" +
+      "o\030\020 \001(\01321.com.nhn.yut2.server.protocol.G" +
+      "ameMissionProgress\"0\n\013WarpPawnToS\022\016\n\006paw" +
+      "nId\030\001 \001(\005\022\021\n\ttoPlaceNo\030\002 \001(\005\"\353\001\n\013WarpPaw" +
+      "nToC\022\017\n\007retCode\030\001 \001(\005\022\016\n\006seatNo\030\002 \001(\005\022\021\n" +
+      "\ttoPlaceNo\030\003 \001(\005\022:\n\ncatchPawns\030\004 \003(\0132&.c" +
+      "om.nhn.yut2.server.protocol.PawnInfo\022C\n\013" +
+      "updateInfos\030\005 \003(\0132..com.nhn.yut2.server." +
       "protocol.PlayerUpdateInfo\022\027\n\017diePlayerSe" +
-      "atNo\030\010 \001(\005\022;\n\ncatchItems\030\t \003(\0132\'.com.nhn" +
-      ".yut2.server.protocol.BoardItem\022\022\n\nisBas" +
-      "eSpot\030\n \001(\010\022\027\n\017pawnPenaltyWarn\030\013 \001(\010\022\031\n\021" +
-      "marvelPenaltyWarn\030\014 \001(\010\022:\n\tbingoInfo\030\r \001" +
-      "(\0132\'.com.nhn.yut2.server.protocol.BingoI" +
-      "nfo\022\027\n\017movePawnIndexes\030\016 \003(\005\022<\n\010buffList" +
-      "\030\017 \003(\0132*.com.nhn.yut2.server.protocol.Pa" +
-      "wnBuffInfo\022F\n\013missionInfo\030\020 \001(\01321.com.nh" +
-      "n.yut2.server.protocol.GameMissionProgre" +
-      "ss\"0\n\013WarpPawnToS\022\016\n\006pawnId\030\001 \001(\005\022\021\n\ttoP" +
-      "laceNo\030\002 \001(\005\"\353\001\n\013WarpPawnToC\022\017\n\007retCode\030" +
-      "\001 \001(\005\022\016\n\006seatNo\030\002 \001(\005\022\021\n\ttoPlaceNo\030\003 \001(\005" +
-      "\022:\n\ncatchPawns\030\004 \003(\0132&.com.nhn.yut2.serv" +
-      "er.protocol.PawnInfo\022C\n\013updateInfos\030\005 \003(" +
-      "\0132..com.nhn.yut2.server.protocol.PlayerU" +
-      "pdateInfo\022\027\n\017diePlayerSeatNo\030\006 \001(\005\022\016\n\006pa" +
-      "wnId\030\007 \001(\005\"T\n\016FreeBettingToS\022B\n\013bettingT" +
-      "ype\030\001 \001(\0162-.com.nhn.yut2.server.protocol" +
-      ".FreeBettingType\"\310\001\n\016FreeBettingToC\022\017\n\007r" +
-      "etCode\030\001 \001(\005\022\016\n\006seatNo\030\002 \001(\005\022B\n\013bettingT" +
-      "ype\030\003 \001(\0162-.com.nhn.yut2.server.protocol" +
-      ".FreeBettingType\022\031\n\021freeBetTotalMoney\030\004 " +
-      "\001(\003\022\032\n\022playerLastBetMoney\030\005 \001(\003\022\032\n\022playe" +
-      "rCurrentMoney\030\006 \001(\003\"\273\004\n\016CalcResultInfo\022\016" +
-      "\n\006seatNo\030\001 \001(\005\022\027\n\017calcResultMoney\030\002 \001(\003\022" +
-      "\026\n\016afterGameMoney\030\003 \001(\003\0227\n\006lvInfo\030\004 \001(\0132" +
-      "\'.com.nhn.yut2.server.protocol.LevelInfo" +
-      "\022\017\n\007levelUp\030\005 \001(\010\022\027\n\017calcResultPoint\030\006 \001" +
-      "(\005\022\030\n\020baseSpotMultiple\030\007 \001(\005\022\027\n\017missionM" +
-      "ultiple\030\010 \001(\005\022\025\n\rmarblePenalty\030\t \001(\010\022\023\n\013" +
-      "pawnPenalty\030\n \001(\010\022\022\n\nbankruptcy\030\013 \001(\010\022T\n" +
-      "\014useDrinkInfo\030\014 \003(\0132>.com.nhn.yut2.serve" +
-      "r.protocol.CalcResultInfo.UseDrinkInfoEn" +
-      "try\022\025\n\rlimitWinMoney\030\r \001(\010\022<\n\010buffList\030\016" +
-      " \003(\0132*.com.nhn.yut2.server.protocol.Pawn" +
-      "BuffInfo\022\026\n\016competitionWin\030\017 \001(\005\022\032\n\022stop" +
-      "CompetitionWin\030\020 \001(\010\0323\n\021UseDrinkInfoEntr" +
-      "y\022\013\n\003key\030\001 \001(\005\022\r\n\005value\030\002 \001(\003:\0028\001\"p\n\024Gam" +
-      "ePlayCompleteNoti\022E\n\017calcResultInfos\030\001 \003" +
-      "(\0132,.com.nhn.yut2.server.protocol.CalcRe" +
-      "sultInfo\022\021\n\twinSeatNo\030\002 \001(\005\"(\n\024GamePlaye" +
-      "rProfileToS\022\020\n\010memberId\030\001 \001(\t\"\347\001\n\024GamePl" +
-      "ayerProfileToC\022\017\n\007retCode\030\001 \001(\005\022\020\n\010membe" +
-      "rId\030\002 \001(\t\022\r\n\005level\030\003 \001(\005\022\020\n\010winCount\030\004 \001" +
-      "(\005\022\021\n\tloseCount\030\005 \001(\005\022\021\n\tearnMoney\030\006 \001(\003" +
-      "\022\013\n\003exp\030\010 \001(\005\022\033\n\023competitionWinCount\030\t \001" +
-      "(\005\022\034\n\024competitionLoseCount\030\n \001(\005\022\035\n\025comp" +
-      "etitionFinalCount\030\013 \001(\005\"-\n\013RoomChatToS\022\r" +
-      "\n\005index\030\001 \001(\005\022\017\n\007message\030\002 \001(\t\"N\n\013RoomCh" +
-      "atToC\022\017\n\007retCode\030\001 \001(\005\022\016\n\006seatNo\030\002 \001(\005\022\r" +
-      "\n\005index\030\003 \001(\005\022\017\n\007message\030\004 \001(\t\"\013\n\tChance" +
-      "ToS\"\301\001\n\tChanceToC\022\017\n\007retCode\030\001 \001(\005\022\016\n\006se" +
-      "atNo\030\002 \001(\005\022Y\n\021paeProbabilityMap\030\003 \003(\0132>." +
-      "com.nhn.yut2.server.protocol.ChanceToC.P" +
-      "aeProbabilityMapEntry\0328\n\026PaeProbabilityM" +
-      "apEntry\022\013\n\003key\030\001 \001(\005\022\r\n\005value\030\002 \001(\005:\0028\001\"" +
-      "\227\001\n\010MailInfo\022\n\n\002id\030\001 \001(\003\022\016\n\006sender\030\002 \001(\t" +
-      "\022\017\n\007regDate\030\003 \001(\003\022\022\n\nexpireDate\030\004 \001(\003\022\r\n" +
-      "\005title\030\005 \001(\t\022\014\n\004body\030\006 \001(\t\022\024\n\014attachItem" +
-      "Id\030\007 \001(\005\022\027\n\017attachItemCount\030\010 \001(\003\"#\n\017New" +
-      "MailCountToS\022\020\n\010category\030\001 \001(\005\"B\n\017NewMai" +
-      "lCountToC\022\020\n\010category\030\001 \001(\005\022\r\n\005count\030\002 \001" +
-      "(\005\022\016\n\006mailId\030\003 \001(\003\"-\n\013MailListToS\022\020\n\010cat" +
-      "egory\030\001 \001(\005\022\014\n\004page\030\002 \001(\005\"\230\001\n\013MailListTo" +
-      "C\022\017\n\007retCode\030\001 \001(\005\022\022\n\nserverTime\030\002 \001(\003\022\020" +
-      "\n\010category\030\003 \001(\005\022\r\n\005total\030\004 \001(\005\022\014\n\004page\030" +
-      "\005 \001(\005\0225\n\005infos\030\006 \003(\0132&.com.nhn.yut2.serv" +
-      "er.protocol.MailInfo\"0\n\016MailCollectToS\022\n" +
-      "\n\002id\030\001 \001(\003\022\022\n\nclientFlag\030\002 \001(\005\"\323\001\n\016MailC" +
-      "ollectToC\022\017\n\007retCode\030\001 \001(\005\022\021\n\tuserMoney\030" +
-      "\003 \001(\003\022T\n\014receiveItems\030\004 \003(\0132>.com.nhn.yu" +
-      "t2.server.protocol.MailCollectToC.Receiv" +
-      "eItemsEntry\022\022\n\nclientFlag\030\005 \001(\005\0323\n\021Recei" +
-      "veItemsEntry\022\013\n\003key\030\001 \001(\005\022\r\n\005value\030\002 \001(\003" +
-      ":\0028\001\"%\n\021MailCollectAllToS\022\020\n\010category\030\001 " +
-      "\001(\005\"\327\001\n\021MailCollectAllToC\022\017\n\007retCode\030\001 \001" +
-      "(\005\022\020\n\010category\030\002 \001(\005\022\021\n\tuserMoney\030\003 \001(\003\022" +
-      "W\n\014receiveItems\030\004 \003(\0132A.com.nhn.yut2.ser" +
-      "ver.protocol.MailCollectAllToC.ReceiveIt" +
-      "emsEntry\0323\n\021ReceiveItemsEntry\022\013\n\003key\030\001 \001" +
-      "(\005\022\r\n\005value\030\002 \001(\003:\0028\001\"\r\n\013UserDataToS\"Q\n\014" +
-      "Yut2UserItem\022\n\n\002id\030\001 \001(\003\022\016\n\006itemId\030\002 \001(\005" +
-      "\022\021\n\titemCount\030\003 \001(\003\022\022\n\nexpireTime\030\004 \001(\003\"" +
-      ">\n\014Yut2UserPawn\022\n\n\002id\030\001 \001(\003\022\016\n\006pawnId\030\002 " +
-      "\001(\005\022\022\n\nexpireTime\030\003 \001(\003\"\016\n\014InventoryToS\"" +
-      "\351\001\n\014InventoryToC\022\017\n\007retCode\030\001 \001(\005\022\022\n\nser" +
-      "verTime\030\002 \001(\003\0229\n\005items\030\003 \003(\0132*.com.nhn.y" +
-      "ut2.server.protocol.Yut2UserItem\0229\n\005pawn" +
-      "s\030\004 \003(\0132*.com.nhn.yut2.server.protocol.Y" +
-      "ut2UserPawn\022>\n\016latestUserData\030\005 \001(\0132&.co" +
-      "m.nhn.yut2.server.protocol.UserData\"\326\001\n\n" +
-      "FriendInfo\022\020\n\010memberId\030\001 \001(\t\022\020\n\010nickname" +
-      "\030\002 \001(\t\022\016\n\006pawnId\030\003 \001(\005\022\n\n\002lv\030\004 \001(\005\022>\n\013fr" +
-      "iendState\030\005 \001(\0162).com.nhn.yut2.server.pr" +
-      "otocol.FriendState\022H\n\020friendPointState\030\006" +
-      " \001(\0162..com.nhn.yut2.server.protocol.Frie" +
-      "ndPointState\"\321\001\n\020FriendInfoDetail\022<\n\nfri" +
-      "endInfo\030\001 \001(\0132(.com.nhn.yut2.server.prot" +
-      "ocol.FriendInfo\022\017\n\007connect\030\002 \001(\010\022\022\n\nlogo" +
-      "utdate\030\003 \001(\003\022H\n\020friendPointState\030\004 \001(\0162." +
-      ".com.nhn.yut2.server.protocol.FriendPoin" +
-      "tState\022\020\n\010gamePlay\030\005 \001(\010\"O\n\017FriendInfoSt" +
-      "ate\022<\n\nfriendInfo\030\001 \001(\0132(.com.nhn.yut2.s" +
-      "erver.protocol.FriendInfo\"\017\n\rFriendListT" +
-      "oS\"\325\001\n\rFriendListToC\022\017\n\007retCode\030\001 \001(\005\022\023\n" +
-      "\013friendPoint\030\002 \001(\003\022C\n\013infodetails\030\003 \003(\0132" +
-      "..com.nhn.yut2.server.protocol.FriendInf" +
-      "oDetail\022\026\n\016friendMaxCount\030\004 \001(\005\022A\n\010iconI" +
-      "nfo\030\005 \001(\0132/.com.nhn.yut2.server.protocol" +
-      ".FriendNewIconInfo\"&\n\022FriendAddSearchToS" +
-      "\022\020\n\010nickname\030\001 \001(\t\"\253\001\n\022FriendAddSearchTo" +
-      "C\022\017\n\007retCode\030\001 \001(\005\022A\n\ninfoStates\030\002 \003(\0132-" +
-      ".com.nhn.yut2.server.protocol.FriendInfo" +
-      "State\022A\n\010iconInfo\030\005 \001(\0132/.com.nhn.yut2.s" +
-      "erver.protocol.FriendNewIconInfo\"\026\n\024Frie" +
-      "ndRequestListToS\"\377\001\n\024FriendRequestListTo" +
-      "C\022\017\n\007retCode\030\001 \001(\005\022\026\n\016friendMaxCount\030\002 \001" +
-      "(\005\022;\n\trecvInfos\030\003 \003(\0132(.com.nhn.yut2.ser" +
-      "ver.protocol.FriendInfo\022>\n\014requestInfos\030" +
-      "\004 \003(\0132(.com.nhn.yut2.server.protocol.Fri" +
-      "endInfo\022A\n\010iconInfo\030\005 \001(\0132/.com.nhn.yut2" +
-      ".server.protocol.FriendNewIconInfo\"\241\001\n\010M" +
-      "emoInfo\022\020\n\010memberId\030\001 \001(\t\022\020\n\010nickname\030\002 " +
-      "\001(\t\022\016\n\006pawnId\030\003 \001(\005\022\014\n\004memo\030\004 \001(\t\022\017\n\007reg" +
-      "date\030\005 \001(\003\022B\n\rmemoReadState\030\006 \001(\0162+.com." +
-      "nhn.yut2.server.protocol.MemoReadState\"\r" +
-      "\n\013MemoListToS\"\256\001\n\013MemoListToC\022\017\n\007retCode" +
-      "\030\001 \001(\005\0225\n\005infos\030\002 \003(\0132&.com.nhn.yut2.ser" +
-      "ver.protocol.MemoInfo\022\024\n\014memoMaxCount\030\003 " +
-      "\001(\005\022A\n\010iconInfo\030\005 \001(\0132/.com.nhn.yut2.ser" +
-      "ver.protocol.FriendNewIconInfo\"\'\n\rMemoDe" +
-      "tailToS\022\026\n\016targetMemberId\030\001 \001(\t\"\227\001\n\rMemo" +
-      "DetailToC\022\017\n\007retCode\030\001 \001(\005\0225\n\005infos\030\002 \003(" +
-      "\0132&.com.nhn.yut2.server.protocol.MemoInf" +
-      "o\022\024\n\014fromMemberId\030\003 \001(\t\022\024\n\014fromNickname\030" +
-      "\004 \001(\t\022\022\n\nfromPawnId\030\005 \001(\005\"3\n\013MemoSendToS" +
-      "\022\026\n\016targetMemberId\030\001 \001(\t\022\014\n\004memo\030\002 \001(\t\"\036" +
-      "\n\013MemoSendToC\022\017\n\007retCode\030\001 \001(\005\"0\n\026Friend" +
-      "PointGiftSendToS\022\026\n\016targetMemberId\030\001 \001(\t" +
-      "\"\213\001\n\026FriendPointGiftSendToC\022\017\n\007retCode\030\001" +
-      " \001(\005\022H\n\020friendPointState\030\002 \001(\0162..com.nhn" +
-      ".yut2.server.protocol.FriendPointState\022\026" +
-      "\n\016targetMemberId\030\003 \001(\t\"\033\n\031FriendPointGif" +
-      "tSendAllToS\"?\n\031FriendPointGiftSendAllToC" +
-      "\022\017\n\007retCode\030\001 \001(\005\022\021\n\tuserMoney\030\002 \001(\003\")\n\017" +
-      "FriendDeleteToS\022\026\n\016targetMemberId\030\001 \001(\t\"" +
-      "\"\n\017FriendDeleteToC\022\017\n\007retCode\030\001 \001(\005\"-\n\023F" +
-      "riendAddRequestToS\022\026\n\016targetMemberId\030\001 \001" +
-      "(\t\"&\n\023FriendAddRequestToC\022\017\n\007retCode\030\001 \001" +
-      "(\005\"z\n\024FriendRecvRequestToS\022\026\n\016targetMemb" +
-      "erId\030\001 \001(\t\022J\n\021friendConfirmType\030\002 \001(\0162/." +
-      "com.nhn.yut2.server.protocol.FriendConfi" +
-      "rmType\"s\n\024FriendRecvRequestToC\022\017\n\007retCod" +
-      "e\030\001 \001(\005\022J\n\021friendConfirmType\030\002 \001(\0162/.com" +
-      ".nhn.yut2.server.protocol.FriendConfirmT" +
-      "ype\"4\n\032FriendSendRequestCancelToS\022\026\n\016tar" +
-      "getMemberId\030\001 \001(\t\"-\n\032FriendSendRequestCa" +
-      "ncelToC\022\017\n\007retCode\030\001 \001(\005\"+\n\026FriendPointS" +
-      "toreBuyToS\022\021\n\tproductId\030\001 \001(\005\"Q\n\026FriendP" +
-      "ointStoreBuyToC\022\017\n\007retCode\030\001 \001(\005\022\023\n\013frie" +
-      "ndPoint\030\002 \001(\003\022\021\n\tproductId\030\003 \001(\005\"B\n\021Frie" +
-      "ndNewIconInfo\022\027\n\017newRequestState\030\001 \001(\010\022\024" +
-      "\n\014newMemoState\030\002 \001(\010\"$\n\021FriendNewIconNot" +
-      "i\022\017\n\007retCode\030\001 \001(\005\"\022\n\020FriendNewIconToS\"o" +
-      "\n\020FriendNewIconToC\022\017\n\007retCode\030\001 \001(\005\022J\n\021f" +
-      "riendNewIconInfo\030\002 \001(\0132/.com.nhn.yut2.se" +
-      "rver.protocol.FriendNewIconInfo\":\n\022MemoN" +
-      "ewContentNoti\022\026\n\016senderNickName\030\001 \001(\t\022\014\n" +
-      "\004memo\030\002 \001(\t\"]\n\030FriendGamePlayRequestToS\022" +
-      "\026\n\016inviteMemberId\030\001 \001(\t\022\034\n\024searchInviteN" +
-      "ickName\030\002 \001(\t\022\013\n\003otp\030\003 \001(\005\"\200\001\n\030FriendGam" +
-      "ePlayRequestToC\022\017\n\007retCode\030\001 \001(\005\022\026\n\016send" +
-      "erMemberId\030\002 \001(\t\022\026\n\016senderNickName\030\003 \001(\t" +
-      "\022\026\n\016inviteNickName\030\004 \001(\t\022\013\n\003otp\030\005 \001(\005\"\232\001" +
-      "\n\036FriendGamePlayRequestAnswerToS\022\026\n\016send" +
-      "erMemberId\030\001 \001(\t\022`\n\034friendGamePlayJoinAn" +
-      "swerType\030\002 \001(\0162:.com.nhn.yut2.server.pro" +
-      "tocol.FriendGamePlayJoinAnswerType\"\253\001\n\036F" +
-      "riendGamePlayRequestAnswerToC\022\017\n\007retCode" +
-      "\030\001 \001(\005\022\026\n\016inviteNickName\030\002 \001(\t\022`\n\034friend" +
-      "GamePlayJoinAnswerType\030\003 \001(\0162:.com.nhn.y" +
-      "ut2.server.protocol.FriendGamePlayJoinAn" +
-      "swerType*}\n\017FreeBettingType\022\010\n\004NONE\020\000\022\007\n" +
-      "\003PIN\020\001\022\t\n\005CHECK\020\002\022\014\n\010ONE_MORE\020\003\022\010\n\004CALL\020" +
-      "\004\022\013\n\007QUARTER\020\005\022\010\n\004HALF\020\006\022\010\n\004FULL\020\007\022\n\n\006AL" +
-      "L_IN\020\010\022\007\n\003DIE\020\t*K\n\007PaeType\022\006\n\002DO\020\000\022\007\n\003GA" +
-      "E\020\001\022\007\n\003GUL\020\002\022\010\n\004YYUT\020\003\022\006\n\002MO\020\004\022\n\n\006BACKDO" +
-      "\020\005\022\010\n\004NACK\020\006*5\n\rPawnStateCode\022\t\n\005READY\020\000" +
-      "\022\014\n\010ON_BOARD\020\001\022\013\n\007HOME_IN\020\002*M\n\017PlayerSta" +
-      "teCode\022\t\n\005Ready\020\000\022\013\n\007Running\020\001\022\010\n\004Stop\020\002" +
-      "\022\n\n\006Winner\020\003\022\014\n\010Observer\020\004*:\n\rSeatStateC" +
-      "ode\022\n\n\006SIT_IN\020\000\022\014\n\010SIT_FULL\020\001\022\017\n\013RESERVE" +
-      "_OUT\020\002*\223\001\n\tRoomState\022\016\n\nROOM_READY\020\000\022\025\n\021" +
-      "ROOM_ELECT_LEADER\020\001\022\025\n\021ROOM_PREPARE_GAME" +
-      "\020\002\022\021\n\rROOM_TOSS_YUT\020\003\022\022\n\016ROOM_MOVE_PAWN\020" +
-      "\004\022\020\n\014ROOM_BETTING\020\005\022\017\n\013ROOM_FINISH\020\006*\240\001\n" +
-      "\010WarpType\022\r\n\tWARP_NONE\020\000\022\013\n\007WARP_DO\020\001\022\014\n" +
-      "\010WARP_GAE\020\002\022\014\n\010WARP_GUL\020\003\022\r\n\tWARP_YYUT\020\004" +
-      "\022\013\n\007WARP_MO\020\005\022\r\n\tWARP_GOAL\020\006\022\n\n\006WARP_5\020\007" +
-      "\022\013\n\007WARP_10\020\010\022\013\n\007WARP_15\020\t\022\013\n\007WARP_22\020\n*" +
-      "0\n\tCHAT_TYPE\022\n\n\006NORMAL\020\000\022\013\n\007WHISPER\020\001\022\n\n" +
-      "\006NOTICE\020\002*u\n\tEquipSlot\022\r\n\tNONE_SLOT\020\000\022\014\n" +
-      "\010EMOTICON\020\001\022\t\n\005DRINK\020\002\022\014\n\010YUT_SKIN\020\003\022\t\n\005" +
-      "BADGE\020\004\022\025\n\021DRINK_BINGO_POINT\020\005\022\020\n\014SUBSCR" +
-      "IPTION\020\006*\250\001\n\014PawnBuffType\022\010\n\004None\020\000\022\017\n\013M" +
-      "ONEY_BONUS\020\001\022\024\n\020LEVELPOINT_BONUS\020\002\022\024\n\020BI" +
-      "NGOPOINT_BONUS\020\003\022\023\n\017GUBAK_GUARANTEE\020\004\022\024\n" +
-      "\020MALBAK_GUARANTEE\020\005\022\021\n\rNAK_GUARANTEE\020\006\022\023" +
-      "\n\017EVENTITEM_BONUS\020\007*,\n\013YutBuffType\022\013\n\007YB" +
-      "_NONE\020\000\022\020\n\014YB_ADD_MONEY\020\001*i\n\013ReserveFlag" +
-      "\022\014\n\010FlagNone\020\000\022\r\n\tLeaveRoom\020\001\022\014\n\010MoveRoo" +
-      "m\020\002\022\014\n\010AutoPlay\020\003\022\017\n\013MobilePause\020\004\022\020\n\014Mo" +
-      "bileResume\020\005*\232\001\n\022ClientCompleteType\022\016\n\nE" +
-      "nter_Room\020\000\022\021\n\rResult_Leader\020\001\022\017\n\013Defaul" +
-      "t_Bet\020\002\022\014\n\010Toss_Yut\020\003\022\r\n\tMove_Pawn\020\004\022\023\n\017" +
-      "Play_Game_Ready\020\005\022\017\n\013Game_Result\020\006\022\r\n\tWa" +
-      "rp_Pawn\020\007*2\n\021FriendConfirmType\022\016\n\nFRIEND",
-      "_YES\020\000\022\r\n\tFRIEND_NO\020\001*O\n\013FriendState\022\017\n\013" +
-      "FRIEND_NONE\020\000\022\r\n\tFRIEND_OK\020\001\022\017\n\013FRIEND_R" +
-      "ECV\020\002\022\017\n\013FRIEND_SEND\020\003*C\n\020FriendPointSta" +
-      "te\022\027\n\023FRIEND_POINT_BEFORE\020\000\022\026\n\022FRIEND_PO" +
-      "INT_AFTER\020\001*:\n\rMemoReadState\022\024\n\020MEMO_REA" +
-      "D_BEFORE\020\000\022\023\n\017MEMO_READ_AFTER\020\001*\200\001\n\034Frie" +
-      "ndGamePlayJoinAnswerType\022\035\n\031FRIEND_GAME_" +
-      "PLAY_JOIN_YES\020\000\022\034\n\030FRIEND_GAME_PLAY_JOIN" +
-      "_NO\020\001\022#\n\037FRIEND_GAME_PLAY_JOIN_NOT_LOBBY" +
-      "\020\002b\006proto3"
+      "atNo\030\006 \001(\005\022\016\n\006pawnId\030\007 \001(\005\"T\n\016FreeBettin" +
+      "gToS\022B\n\013bettingType\030\001 \001(\0162-.com.nhn.yut2" +
+      ".server.protocol.FreeBettingType\"\310\001\n\016Fre" +
+      "eBettingToC\022\017\n\007retCode\030\001 \001(\005\022\016\n\006seatNo\030\002" +
+      " \001(\005\022B\n\013bettingType\030\003 \001(\0162-.com.nhn.yut2" +
+      ".server.protocol.FreeBettingType\022\031\n\021free" +
+      "BetTotalMoney\030\004 \001(\003\022\032\n\022playerLastBetMone" +
+      "y\030\005 \001(\003\022\032\n\022playerCurrentMoney\030\006 \001(\003\"\273\004\n\016" +
+      "CalcResultInfo\022\016\n\006seatNo\030\001 \001(\005\022\027\n\017calcRe" +
+      "sultMoney\030\002 \001(\003\022\026\n\016afterGameMoney\030\003 \001(\003\022" +
+      "7\n\006lvInfo\030\004 \001(\0132\'.com.nhn.yut2.server.pr" +
+      "otocol.LevelInfo\022\017\n\007levelUp\030\005 \001(\010\022\027\n\017cal" +
+      "cResultPoint\030\006 \001(\005\022\030\n\020baseSpotMultiple\030\007" +
+      " \001(\005\022\027\n\017missionMultiple\030\010 \001(\005\022\025\n\rmarbleP" +
+      "enalty\030\t \001(\010\022\023\n\013pawnPenalty\030\n \001(\010\022\022\n\nban" +
+      "kruptcy\030\013 \001(\010\022T\n\014useDrinkInfo\030\014 \003(\0132>.co" +
+      "m.nhn.yut2.server.protocol.CalcResultInf" +
+      "o.UseDrinkInfoEntry\022\025\n\rlimitWinMoney\030\r \001" +
+      "(\010\022<\n\010buffList\030\016 \003(\0132*.com.nhn.yut2.serv" +
+      "er.protocol.PawnBuffInfo\022\026\n\016competitionW" +
+      "in\030\017 \001(\005\022\032\n\022stopCompetitionWin\030\020 \001(\010\0323\n\021" +
+      "UseDrinkInfoEntry\022\013\n\003key\030\001 \001(\005\022\r\n\005value\030" +
+      "\002 \001(\003:\0028\001\"p\n\024GamePlayCompleteNoti\022E\n\017cal" +
+      "cResultInfos\030\001 \003(\0132,.com.nhn.yut2.server" +
+      ".protocol.CalcResultInfo\022\021\n\twinSeatNo\030\002 " +
+      "\001(\005\"(\n\024GamePlayerProfileToS\022\020\n\010memberId\030" +
+      "\001 \001(\t\"\347\001\n\024GamePlayerProfileToC\022\017\n\007retCod" +
+      "e\030\001 \001(\005\022\020\n\010memberId\030\002 \001(\t\022\r\n\005level\030\003 \001(\005" +
+      "\022\020\n\010winCount\030\004 \001(\005\022\021\n\tloseCount\030\005 \001(\005\022\021\n" +
+      "\tearnMoney\030\006 \001(\003\022\013\n\003exp\030\010 \001(\005\022\033\n\023competi" +
+      "tionWinCount\030\t \001(\005\022\034\n\024competitionLoseCou" +
+      "nt\030\n \001(\005\022\035\n\025competitionFinalCount\030\013 \001(\005\"" +
+      "-\n\013RoomChatToS\022\r\n\005index\030\001 \001(\005\022\017\n\007message" +
+      "\030\002 \001(\t\"N\n\013RoomChatToC\022\017\n\007retCode\030\001 \001(\005\022\016" +
+      "\n\006seatNo\030\002 \001(\005\022\r\n\005index\030\003 \001(\005\022\017\n\007message" +
+      "\030\004 \001(\t\"\013\n\tChanceToS\"\301\001\n\tChanceToC\022\017\n\007ret" +
+      "Code\030\001 \001(\005\022\016\n\006seatNo\030\002 \001(\005\022Y\n\021paeProbabi" +
+      "lityMap\030\003 \003(\0132>.com.nhn.yut2.server.prot" +
+      "ocol.ChanceToC.PaeProbabilityMapEntry\0328\n" +
+      "\026PaeProbabilityMapEntry\022\013\n\003key\030\001 \001(\005\022\r\n\005" +
+      "value\030\002 \001(\005:\0028\001\"\227\001\n\010MailInfo\022\n\n\002id\030\001 \001(\003" +
+      "\022\016\n\006sender\030\002 \001(\t\022\017\n\007regDate\030\003 \001(\003\022\022\n\nexp" +
+      "ireDate\030\004 \001(\003\022\r\n\005title\030\005 \001(\t\022\014\n\004body\030\006 \001" +
+      "(\t\022\024\n\014attachItemId\030\007 \001(\005\022\027\n\017attachItemCo" +
+      "unt\030\010 \001(\003\"#\n\017NewMailCountToS\022\020\n\010category" +
+      "\030\001 \001(\005\"B\n\017NewMailCountToC\022\020\n\010category\030\001 " +
+      "\001(\005\022\r\n\005count\030\002 \001(\005\022\016\n\006mailId\030\003 \001(\003\"-\n\013Ma" +
+      "ilListToS\022\020\n\010category\030\001 \001(\005\022\014\n\004page\030\002 \001(" +
+      "\005\"\230\001\n\013MailListToC\022\017\n\007retCode\030\001 \001(\005\022\022\n\nse" +
+      "rverTime\030\002 \001(\003\022\020\n\010category\030\003 \001(\005\022\r\n\005tota" +
+      "l\030\004 \001(\005\022\014\n\004page\030\005 \001(\005\0225\n\005infos\030\006 \003(\0132&.c" +
+      "om.nhn.yut2.server.protocol.MailInfo\"0\n\016" +
+      "MailCollectToS\022\n\n\002id\030\001 \001(\003\022\022\n\nclientFlag" +
+      "\030\002 \001(\005\"\323\001\n\016MailCollectToC\022\017\n\007retCode\030\001 \001" +
+      "(\005\022\021\n\tuserMoney\030\003 \001(\003\022T\n\014receiveItems\030\004 " +
+      "\003(\0132>.com.nhn.yut2.server.protocol.MailC" +
+      "ollectToC.ReceiveItemsEntry\022\022\n\nclientFla" +
+      "g\030\005 \001(\005\0323\n\021ReceiveItemsEntry\022\013\n\003key\030\001 \001(" +
+      "\005\022\r\n\005value\030\002 \001(\003:\0028\001\"%\n\021MailCollectAllTo" +
+      "S\022\020\n\010category\030\001 \001(\005\"\327\001\n\021MailCollectAllTo" +
+      "C\022\017\n\007retCode\030\001 \001(\005\022\020\n\010category\030\002 \001(\005\022\021\n\t" +
+      "userMoney\030\003 \001(\003\022W\n\014receiveItems\030\004 \003(\0132A." +
+      "com.nhn.yut2.server.protocol.MailCollect" +
+      "AllToC.ReceiveItemsEntry\0323\n\021ReceiveItems" +
+      "Entry\022\013\n\003key\030\001 \001(\005\022\r\n\005value\030\002 \001(\003:\0028\001\"\r\n" +
+      "\013UserDataToS\"Q\n\014Yut2UserItem\022\n\n\002id\030\001 \001(\003" +
+      "\022\016\n\006itemId\030\002 \001(\005\022\021\n\titemCount\030\003 \001(\003\022\022\n\ne" +
+      "xpireTime\030\004 \001(\003\">\n\014Yut2UserPawn\022\n\n\002id\030\001 " +
+      "\001(\003\022\016\n\006pawnId\030\002 \001(\005\022\022\n\nexpireTime\030\003 \001(\003\"" +
+      "\016\n\014InventoryToS\"\351\001\n\014InventoryToC\022\017\n\007retC" +
+      "ode\030\001 \001(\005\022\022\n\nserverTime\030\002 \001(\003\0229\n\005items\030\003" +
+      " \003(\0132*.com.nhn.yut2.server.protocol.Yut2" +
+      "UserItem\0229\n\005pawns\030\004 \003(\0132*.com.nhn.yut2.s" +
+      "erver.protocol.Yut2UserPawn\022>\n\016latestUse" +
+      "rData\030\005 \001(\0132&.com.nhn.yut2.server.protoc" +
+      "ol.UserData\"\326\001\n\nFriendInfo\022\020\n\010memberId\030\001" +
+      " \001(\t\022\020\n\010nickname\030\002 \001(\t\022\016\n\006pawnId\030\003 \001(\005\022\n" +
+      "\n\002lv\030\004 \001(\005\022>\n\013friendState\030\005 \001(\0162).com.nh" +
+      "n.yut2.server.protocol.FriendState\022H\n\020fr" +
+      "iendPointState\030\006 \001(\0162..com.nhn.yut2.serv" +
+      "er.protocol.FriendPointState\"\321\001\n\020FriendI" +
+      "nfoDetail\022<\n\nfriendInfo\030\001 \001(\0132(.com.nhn." +
+      "yut2.server.protocol.FriendInfo\022\017\n\007conne" +
+      "ct\030\002 \001(\010\022\022\n\nlogoutdate\030\003 \001(\003\022H\n\020friendPo" +
+      "intState\030\004 \001(\0162..com.nhn.yut2.server.pro" +
+      "tocol.FriendPointState\022\020\n\010gamePlay\030\005 \001(\010" +
+      "\"O\n\017FriendInfoState\022<\n\nfriendInfo\030\001 \001(\0132" +
+      "(.com.nhn.yut2.server.protocol.FriendInf" +
+      "o\"\017\n\rFriendListToS\"\325\001\n\rFriendListToC\022\017\n\007" +
+      "retCode\030\001 \001(\005\022\023\n\013friendPoint\030\002 \001(\003\022C\n\013in" +
+      "fodetails\030\003 \003(\0132..com.nhn.yut2.server.pr" +
+      "otocol.FriendInfoDetail\022\026\n\016friendMaxCoun" +
+      "t\030\004 \001(\005\022A\n\010iconInfo\030\005 \001(\0132/.com.nhn.yut2" +
+      ".server.protocol.FriendNewIconInfo\"&\n\022Fr" +
+      "iendAddSearchToS\022\020\n\010nickname\030\001 \001(\t\"\253\001\n\022F" +
+      "riendAddSearchToC\022\017\n\007retCode\030\001 \001(\005\022A\n\nin" +
+      "foStates\030\002 \003(\0132-.com.nhn.yut2.server.pro" +
+      "tocol.FriendInfoState\022A\n\010iconInfo\030\005 \001(\0132" +
+      "/.com.nhn.yut2.server.protocol.FriendNew" +
+      "IconInfo\"\026\n\024FriendRequestListToS\"\377\001\n\024Fri" +
+      "endRequestListToC\022\017\n\007retCode\030\001 \001(\005\022\026\n\016fr" +
+      "iendMaxCount\030\002 \001(\005\022;\n\trecvInfos\030\003 \003(\0132(." +
+      "com.nhn.yut2.server.protocol.FriendInfo\022" +
+      ">\n\014requestInfos\030\004 \003(\0132(.com.nhn.yut2.ser" +
+      "ver.protocol.FriendInfo\022A\n\010iconInfo\030\005 \001(" +
+      "\0132/.com.nhn.yut2.server.protocol.FriendN" +
+      "ewIconInfo\"\241\001\n\010MemoInfo\022\020\n\010memberId\030\001 \001(" +
+      "\t\022\020\n\010nickname\030\002 \001(\t\022\016\n\006pawnId\030\003 \001(\005\022\014\n\004m" +
+      "emo\030\004 \001(\t\022\017\n\007regdate\030\005 \001(\003\022B\n\rmemoReadSt" +
+      "ate\030\006 \001(\0162+.com.nhn.yut2.server.protocol" +
+      ".MemoReadState\"\r\n\013MemoListToS\"\256\001\n\013MemoLi" +
+      "stToC\022\017\n\007retCode\030\001 \001(\005\0225\n\005infos\030\002 \003(\0132&." +
+      "com.nhn.yut2.server.protocol.MemoInfo\022\024\n" +
+      "\014memoMaxCount\030\003 \001(\005\022A\n\010iconInfo\030\005 \001(\0132/." +
+      "com.nhn.yut2.server.protocol.FriendNewIc" +
+      "onInfo\"\'\n\rMemoDetailToS\022\026\n\016targetMemberI" +
+      "d\030\001 \001(\t\"\227\001\n\rMemoDetailToC\022\017\n\007retCode\030\001 \001" +
+      "(\005\0225\n\005infos\030\002 \003(\0132&.com.nhn.yut2.server." +
+      "protocol.MemoInfo\022\024\n\014fromMemberId\030\003 \001(\t\022" +
+      "\024\n\014fromNickname\030\004 \001(\t\022\022\n\nfromPawnId\030\005 \001(" +
+      "\005\"3\n\013MemoSendToS\022\026\n\016targetMemberId\030\001 \001(\t" +
+      "\022\014\n\004memo\030\002 \001(\t\"\036\n\013MemoSendToC\022\017\n\007retCode" +
+      "\030\001 \001(\005\"0\n\026FriendPointGiftSendToS\022\026\n\016targ" +
+      "etMemberId\030\001 \001(\t\"\213\001\n\026FriendPointGiftSend" +
+      "ToC\022\017\n\007retCode\030\001 \001(\005\022H\n\020friendPointState" +
+      "\030\002 \001(\0162..com.nhn.yut2.server.protocol.Fr" +
+      "iendPointState\022\026\n\016targetMemberId\030\003 \001(\t\"\033" +
+      "\n\031FriendPointGiftSendAllToS\"?\n\031FriendPoi" +
+      "ntGiftSendAllToC\022\017\n\007retCode\030\001 \001(\005\022\021\n\tuse" +
+      "rMoney\030\002 \001(\003\")\n\017FriendDeleteToS\022\026\n\016targe" +
+      "tMemberId\030\001 \001(\t\"\"\n\017FriendDeleteToC\022\017\n\007re" +
+      "tCode\030\001 \001(\005\"-\n\023FriendAddRequestToS\022\026\n\016ta" +
+      "rgetMemberId\030\001 \001(\t\"&\n\023FriendAddRequestTo" +
+      "C\022\017\n\007retCode\030\001 \001(\005\"z\n\024FriendRecvRequestT" +
+      "oS\022\026\n\016targetMemberId\030\001 \001(\t\022J\n\021friendConf" +
+      "irmType\030\002 \001(\0162/.com.nhn.yut2.server.prot" +
+      "ocol.FriendConfirmType\"s\n\024FriendRecvRequ" +
+      "estToC\022\017\n\007retCode\030\001 \001(\005\022J\n\021friendConfirm" +
+      "Type\030\002 \001(\0162/.com.nhn.yut2.server.protoco" +
+      "l.FriendConfirmType\"4\n\032FriendSendRequest" +
+      "CancelToS\022\026\n\016targetMemberId\030\001 \001(\t\"-\n\032Fri" +
+      "endSendRequestCancelToC\022\017\n\007retCode\030\001 \001(\005" +
+      "\"+\n\026FriendPointStoreBuyToS\022\021\n\tproductId\030" +
+      "\001 \001(\005\"Q\n\026FriendPointStoreBuyToC\022\017\n\007retCo" +
+      "de\030\001 \001(\005\022\023\n\013friendPoint\030\002 \001(\003\022\021\n\tproduct" +
+      "Id\030\003 \001(\005\"B\n\021FriendNewIconInfo\022\027\n\017newRequ" +
+      "estState\030\001 \001(\010\022\024\n\014newMemoState\030\002 \001(\010\"$\n\021" +
+      "FriendNewIconNoti\022\017\n\007retCode\030\001 \001(\005\"\022\n\020Fr" +
+      "iendNewIconToS\"o\n\020FriendNewIconToC\022\017\n\007re" +
+      "tCode\030\001 \001(\005\022J\n\021friendNewIconInfo\030\002 \001(\0132/" +
+      ".com.nhn.yut2.server.protocol.FriendNewI" +
+      "conInfo\":\n\022MemoNewContentNoti\022\026\n\016senderN" +
+      "ickName\030\001 \001(\t\022\014\n\004memo\030\002 \001(\t\"]\n\030FriendGam" +
+      "ePlayRequestToS\022\026\n\016inviteMemberId\030\001 \001(\t\022" +
+      "\034\n\024searchInviteNickName\030\002 \001(\t\022\013\n\003otp\030\003 \001" +
+      "(\005\"\200\001\n\030FriendGamePlayRequestToC\022\017\n\007retCo" +
+      "de\030\001 \001(\005\022\026\n\016senderMemberId\030\002 \001(\t\022\026\n\016send" +
+      "erNickName\030\003 \001(\t\022\026\n\016inviteNickName\030\004 \001(\t" +
+      "\022\013\n\003otp\030\005 \001(\005\"\232\001\n\036FriendGamePlayRequestA" +
+      "nswerToS\022\026\n\016senderMemberId\030\001 \001(\t\022`\n\034frie" +
+      "ndGamePlayJoinAnswerType\030\002 \001(\0162:.com.nhn" +
+      ".yut2.server.protocol.FriendGamePlayJoin" +
+      "AnswerType\"\253\001\n\036FriendGamePlayRequestAnsw" +
+      "erToC\022\017\n\007retCode\030\001 \001(\005\022\026\n\016inviteNickName" +
+      "\030\002 \001(\t\022`\n\034friendGamePlayJoinAnswerType\030\003" +
+      " \001(\0162:.com.nhn.yut2.server.protocol.Frie" +
+      "ndGamePlayJoinAnswerType*}\n\017FreeBettingT" +
+      "ype\022\010\n\004NONE\020\000\022\007\n\003PIN\020\001\022\t\n\005CHECK\020\002\022\014\n\010ONE" +
+      "_MORE\020\003\022\010\n\004CALL\020\004\022\013\n\007QUARTER\020\005\022\010\n\004HALF\020\006" +
+      "\022\010\n\004FULL\020\007\022\n\n\006ALL_IN\020\010\022\007\n\003DIE\020\t*J\n\007PaeTy" +
+      "pe\022\006\n\002DO\020\000\022\007\n\003GAE\020\001\022\007\n\003GUL\020\002\022\010\n\004YYUT\020\003\022\006" +
+      "\n\002MO\020\004\022\n\n\006BACKDO\020\005\022\007\n\003NAK\020\006*5\n\rPawnState" +
+      "Code\022\t\n\005READY\020\000\022\014\n\010ON_BOARD\020\001\022\013\n\007HOME_IN" +
+      "\020\002*M\n\017PlayerStateCode\022\t\n\005Ready\020\000\022\013\n\007Runn" +
+      "ing\020\001\022\010\n\004Stop\020\002\022\n\n\006Winner\020\003\022\014\n\010Observer\020" +
+      "\004*:\n\rSeatStateCode\022\n\n\006SIT_IN\020\000\022\014\n\010SIT_FU" +
+      "LL\020\001\022\017\n\013RESERVE_OUT\020\002*\223\001\n\tRoomState\022\016\n\nR" +
+      "OOM_READY\020\000\022\025\n\021ROOM_ELECT_LEADER\020\001\022\025\n\021RO" +
+      "OM_PREPARE_GAME\020\002\022\021\n\rROOM_TOSS_YUT\020\003\022\022\n\016" +
+      "ROOM_MOVE_PAWN\020\004\022\020\n\014ROOM_BETTING\020\005\022\017\n\013RO" +
+      "OM_FINISH\020\006*\240\001\n\010WarpType\022\r\n\tWARP_NONE\020\000\022" +
+      "\013\n\007WARP_DO\020\001\022\014\n\010WARP_GAE\020\002\022\014\n\010WARP_GUL\020\003" +
+      "\022\r\n\tWARP_YYUT\020\004\022\013\n\007WARP_MO\020\005\022\r\n\tWARP_GOA" +
+      "L\020\006\022\n\n\006WARP_5\020\007\022\013\n\007WARP_10\020\010\022\013\n\007WARP_15\020" +
+      "\t\022\013\n\007WARP_22\020\n*0\n\tCHAT_TYPE\022\n\n\006NORMAL\020\000\022" +
+      "\013\n\007WHISPER\020\001\022\n\n\006NOTICE\020\002*u\n\tEquipSlot\022\r\n" +
+      "\tNONE_SLOT\020\000\022\014\n\010EMOTICON\020\001\022\t\n\005DRINK\020\002\022\014\n" +
+      "\010YUT_SKIN\020\003\022\t\n\005BADGE\020\004\022\025\n\021DRINK_BINGO_PO" +
+      "INT\020\005\022\020\n\014SUBSCRIPTION\020\006*\250\001\n\014PawnBuffType" +
+      "\022\010\n\004None\020\000\022\017\n\013MONEY_BONUS\020\001\022\024\n\020LEVELPOIN" +
+      "T_BONUS\020\002\022\024\n\020BINGOPOINT_BONUS\020\003\022\023\n\017GUBAK" +
+      "_GUARANTEE\020\004\022\024\n\020MALBAK_GUARANTEE\020\005\022\021\n\rNA" +
+      "K_GUARANTEE\020\006\022\023\n\017EVENTITEM_BONUS\020\007*,\n\013Yu" +
+      "tBuffType\022\013\n\007YB_NONE\020\000\022\020\n\014YB_ADD_MONEY\020\001" +
+      "*i\n\013ReserveFlag\022\014\n\010FlagNone\020\000\022\r\n\tLeaveRo" +
+      "om\020\001\022\014\n\010MoveRoom\020\002\022\014\n\010AutoPlay\020\003\022\017\n\013Mobi" +
+      "lePause\020\004\022\020\n\014MobileResume\020\005*\232\001\n\022ClientCo" +
+      "mpleteType\022\016\n\nEnter_Room\020\000\022\021\n\rResult_Lea" +
+      "der\020\001\022\017\n\013Default_Bet\020\002\022\014\n\010Toss_Yut\020\003\022\r\n\t" +
+      "Move_Pawn\020\004\022\023\n\017Play_Game_Ready\020\005\022\017\n\013Game" +
+      "_Result\020\006\022\r\n\tWarp_Pawn\020\007*2\n\021FriendConfir",
+      "mType\022\016\n\nFRIEND_YES\020\000\022\r\n\tFRIEND_NO\020\001*O\n\013" +
+      "FriendState\022\017\n\013FRIEND_NONE\020\000\022\r\n\tFRIEND_O" +
+      "K\020\001\022\017\n\013FRIEND_RECV\020\002\022\017\n\013FRIEND_SEND\020\003*C\n" +
+      "\020FriendPointState\022\027\n\023FRIEND_POINT_BEFORE" +
+      "\020\000\022\026\n\022FRIEND_POINT_AFTER\020\001*:\n\rMemoReadSt" +
+      "ate\022\024\n\020MEMO_READ_BEFORE\020\000\022\023\n\017MEMO_READ_A" +
+      "FTER\020\001*\200\001\n\034FriendGamePlayJoinAnswerType\022" +
+      "\035\n\031FRIEND_GAME_PLAY_JOIN_YES\020\000\022\034\n\030FRIEND" +
+      "_GAME_PLAY_JOIN_NO\020\001\022#\n\037FRIEND_GAME_PLAY" +
+      "_JOIN_NOT_LOBBY\020\002b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -104776,7 +104839,7 @@ public final class Yut2GameProto {
     internal_static_com_nhn_yut2_server_protocol_RoomListData_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_nhn_yut2_server_protocol_RoomListData_descriptor,
-        new java.lang.String[] { "Title", "ChannelType", "MaxPlayer", "CurPlayer", });
+        new java.lang.String[] { "Title", "ChannelType", "MaxPlayer", "CurPlayer", "RoomId", });
     internal_static_com_nhn_yut2_server_protocol_RoomListToC_descriptor =
       getDescriptor().getMessageTypes().get(29);
     internal_static_com_nhn_yut2_server_protocol_RoomListToC_fieldAccessorTable = new

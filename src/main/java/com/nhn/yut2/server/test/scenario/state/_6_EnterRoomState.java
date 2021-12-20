@@ -2,7 +2,7 @@ package com.nhn.yut2.server.test.scenario.state;
 
 import com.nhn.gameanvil.gamehammer.scenario.State;
 import com.nhn.gameanvil.gamehammer.tester.PacketResult;
-import com.nhn.gameanvil.gamehammer.tester.Timer;
+import com.nhn.gameanvil.gamehammer.tester.ResultForceLeaveRoomNoti;
 import com.nhn.gameanvil.gamehammer.tester.User;
 import com.nhn.yut2.server.protocol.Yut2GameProto;
 import com.nhn.yut2.server.test.scenario.Yut2Actor;
@@ -24,8 +24,8 @@ public class _6_EnterRoomState extends State<Yut2Actor> {
     }
 
     private void addRoomListener(Yut2Actor actor) {
-        if (actor.isListenerResisted) return;
-        else actor.isListenerResisted = true;
+        if (actor.isRoomListenerRegistered) return;
+        else actor.isRoomListenerRegistered = true;
 
         User user = actor.getUser();
         user.addListener(Yut2GameProto.EnterRoomToC.getDescriptor(), packetResult -> OnEnterRoomToC( actor, packetResult ));
@@ -38,6 +38,14 @@ public class _6_EnterRoomState extends State<Yut2Actor> {
         user.addListener(Yut2GameProto.TossYutToC.getDescriptor(), packetResult -> OnTossYutToC( actor, packetResult ));
         user.addListener(Yut2GameProto.MovePawnToC.getDescriptor(), packetResult -> OnMovePawnToC( actor, packetResult ));
         user.addListener(Yut2GameProto.GamePlayCompleteNoti.getDescriptor(), packetResult -> OnGamePlayCompleteNoti( actor, packetResult ));
+
+        user.addListenerForceLeaveRoomNoti(packetResult -> OnLeaveRoom( actor, packetResult ));
+    }
+
+    private void OnLeaveRoom(Yut2Actor actor, ResultForceLeaveRoomNoti packetResult) {
+        // 서버에서 kick out 당하면 이리 들어온다.
+        logger.info("<==OnLeaveRoom[{}-{}]: resultCode={}",actor.getIndex(), actor.getNickname() , packetResult.getResultCode());
+        actor.changeState(_9_RoomListState.class);
     }
 
     private void OnEnterRoomToC(Yut2Actor actor, PacketResult packetResult) {
@@ -184,6 +192,11 @@ public class _6_EnterRoomState extends State<Yut2Actor> {
             actor.isPlay = true;
             logger.info("<==GameInitializeNoti [{}]: seatNo={}", actor.getNickname(), actor.seatNo);
             sendComplete(actor, Yut2GameProto.ClientCompleteType.Default_Bet);
+
+            logger.info("<==ReserveFlagToS [{}]: seatNo={}", actor.getNickname(), actor.seatNo);
+            Yut2GameProto.ReserveFlagToS.Builder reserveFlag = Yut2GameProto.ReserveFlagToS.newBuilder();
+            reserveFlag.setReserveFlag(Yut2GameProto.ReserveFlag.LeaveRoom);
+            actor.getUser().send(reserveFlag.build());
         }
         else logger.error("GameInitializeNoti Error : {}", actor.getNickname());
     }
@@ -197,7 +210,8 @@ public class _6_EnterRoomState extends State<Yut2Actor> {
         }
         if (message != null) {
             logger.info("<==GamePlayCompleteNoti [{}]: WinNo={}", actor.getNickname(), message.getWinSeatNo());
-            actor.changeState(_7_LeaveRoomState.class);
+            // actor.changeState(_7_LeaveRoomState.class);
+            // kickout 당하길 기다리자.
         }
         else logger.error("GamePlayCompleteNoti Error[{}]", actor.getNickname());
     }
@@ -282,10 +296,10 @@ public class _6_EnterRoomState extends State<Yut2Actor> {
         if (actor.isPlay) {
             logger.info("checkGameStart - Play Game! [{}] - {}", actor.getNickname(), actor.waitCount);
         }
-        else if (actor.waitCount < 5) {
+        else if (actor.waitCount < 10) {
             actor.waitCount++;
             actor.setTimer(() -> checkGameStart(actor), 1000);
-            logger.info("checkGameStart [{}]: wait : {}", actor.getNickname(), actor.waitCount);
+            // logger.info("checkGameStart [{}]: wait : {}", actor.getNickname(), actor.waitCount);
         }
         else {
             logger.info("checkGameStart [{}]: leaveRoom - {}", actor.getNickname(), actor.waitCount);
@@ -303,6 +317,7 @@ public class _6_EnterRoomState extends State<Yut2Actor> {
     @Override
     protected void onExit(Yut2Actor actor) {
         logger.info("Yut2Actor idx[{}-{}] - onExit : {}", actor.getIndex(), actor.getNickname(), getStateName());
+        actor.reset();
         /*
         actor.getUser().removeAllListener(Yut2GameProto.EnterRoomToC.getDescriptor());
         actor.getUser().removeAllListener(Yut2GameProto.GameReadyCompleteNoti.getDescriptor());
@@ -314,7 +329,9 @@ public class _6_EnterRoomState extends State<Yut2Actor> {
         actor.getUser().removeAllListener(Yut2GameProto.TossYutToC.getDescriptor());
         actor.getUser().removeAllListener(Yut2GameProto.MovePawnToC.getDescriptor());
         actor.getUser().removeAllListener(Yut2GameProto.GamePlayCompleteNoti.getDescriptor());
-        */
+
+        actor.getUser().removeListenerForceLeaveRoomNoti(packetResult -> OnLeaveRoom( actor, packetResult ));
+         */
     }
 }
 
