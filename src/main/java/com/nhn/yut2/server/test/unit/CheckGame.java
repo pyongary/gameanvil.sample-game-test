@@ -12,8 +12,6 @@ import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.Assert.*;
 import static org.slf4j.LoggerFactory.getLogger;
@@ -27,7 +25,7 @@ public class CheckGame extends Fixture {
     public static void beforeClass() {
         // 테스트 하려는 서버의 IP 와 Port 를 지정합니다.
         // initConnector("dev-sinyutnori2.hangame.com", 11300);
-        initConnector("133.186.142.94", 11300, true);
+        initConnector("dev-sinyutnori2.hangame.com", 11300, true);
     }
 
     @AfterClass
@@ -43,6 +41,13 @@ public class CheckGame extends Fixture {
 
     //-------------------------------------------------------------------------------------
     @Test
+    public void ConnectAIServer() throws IOException {
+        String data = "{\"gn\":2222, \"fen\":\"2/000000|000000|//0|0|/0/2/\"}";
+        String res = HttpConnector.Post(data);
+
+        logger.info("ConnectAIServer : " + res);
+    }
+
     public void matchFor2Player() {
         // 유저 2명 생성
 
