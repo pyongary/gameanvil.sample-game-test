@@ -21,7 +21,7 @@ public class _3_AuthenticationState extends State<Yut2Actor> {
         // 인증 메세지 생성
         Yut2GameProto.AuthenticationToS.Builder authenticationReq = Yut2GameProto.AuthenticationToS.newBuilder().setAccessToken("test-bot");
 
-        String nickname = "Bot" + actor.getConnection().getUuid();
+        String nickname = "AIPlayer" + actor.getConnection().getUuid();
         // 인증 요청
         actor.getConnection().authentication(authenticationResult -> {
             if (authenticationResult.isSuccess()) {
