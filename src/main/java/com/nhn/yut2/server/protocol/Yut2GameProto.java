@@ -1440,6 +1440,18 @@ public final class Yut2GameProto {
      * <code>EVENTITEM_BONUS = 7;</code>
      */
     EVENTITEM_BONUS(7),
+    /**
+     * <code>GUBAK_BY_SEED = 8;</code>
+     */
+    GUBAK_BY_SEED(8),
+    /**
+     * <code>MALBAK_BY_SEED = 9;</code>
+     */
+    MALBAK_BY_SEED(9),
+    /**
+     * <code>MONEY_BY_SEED = 10;</code>
+     */
+    MONEY_BY_SEED(10),
     UNRECOGNIZED(-1),
     ;
 
@@ -1503,6 +1515,18 @@ public final class Yut2GameProto {
      * <code>EVENTITEM_BONUS = 7;</code>
      */
     public static final int EVENTITEM_BONUS_VALUE = 7;
+    /**
+     * <code>GUBAK_BY_SEED = 8;</code>
+     */
+    public static final int GUBAK_BY_SEED_VALUE = 8;
+    /**
+     * <code>MALBAK_BY_SEED = 9;</code>
+     */
+    public static final int MALBAK_BY_SEED_VALUE = 9;
+    /**
+     * <code>MONEY_BY_SEED = 10;</code>
+     */
+    public static final int MONEY_BY_SEED_VALUE = 10;
 
 
     public final int getNumber() {
@@ -1531,6 +1555,9 @@ public final class Yut2GameProto {
         case 5: return MALBAK_GUARANTEE;
         case 6: return NAK_GUARANTEE;
         case 7: return EVENTITEM_BONUS;
+        case 8: return GUBAK_BY_SEED;
+        case 9: return MALBAK_BY_SEED;
+        case 10: return MONEY_BY_SEED;
         default: return null;
       }
     }
@@ -108559,6 +108586,11 @@ public final class Yut2GameProto {
   public interface Yut2FenToSOrBuilder extends
       // @@protoc_insertion_point(interface_extends:com.nhn.yut2.server.protocol.Yut2FenToS)
       com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>bool useChance = 1;</code>
+     */
+    boolean getUseChance();
   }
   /**
    * Protobuf type {@code com.nhn.yut2.server.protocol.Yut2FenToS}
@@ -108573,6 +108605,7 @@ public final class Yut2GameProto {
       super(builder);
     }
     private Yut2FenToS() {
+      useChance_ = false;
     }
 
     @java.lang.Override
@@ -108588,6 +108621,7 @@ public final class Yut2GameProto {
       if (extensionRegistry == null) {
         throw new java.lang.NullPointerException();
       }
+      int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -108598,6 +108632,11 @@ public final class Yut2GameProto {
             case 0:
               done = true;
               break;
+            case 8: {
+
+              useChance_ = input.readBool();
+              break;
+            }
             default: {
               if (!parseUnknownFieldProto3(
                   input, unknownFields, extensionRegistry, tag)) {
@@ -108630,6 +108669,15 @@ public final class Yut2GameProto {
               com.nhn.yut2.server.protocol.Yut2GameProto.Yut2FenToS.class, com.nhn.yut2.server.protocol.Yut2GameProto.Yut2FenToS.Builder.class);
     }
 
+    public static final int USECHANCE_FIELD_NUMBER = 1;
+    private boolean useChance_;
+    /**
+     * <code>bool useChance = 1;</code>
+     */
+    public boolean getUseChance() {
+      return useChance_;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -108644,6 +108692,9 @@ public final class Yut2GameProto {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      if (useChance_ != false) {
+        output.writeBool(1, useChance_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -108653,6 +108704,10 @@ public final class Yut2GameProto {
       if (size != -1) return size;
 
       size = 0;
+      if (useChance_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(1, useChance_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -108669,6 +108724,8 @@ public final class Yut2GameProto {
       com.nhn.yut2.server.protocol.Yut2GameProto.Yut2FenToS other = (com.nhn.yut2.server.protocol.Yut2GameProto.Yut2FenToS) obj;
 
       boolean result = true;
+      result = result && (getUseChance()
+          == other.getUseChance());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -108680,6 +108737,9 @@ public final class Yut2GameProto {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + USECHANCE_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getUseChance());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -108813,6 +108873,8 @@ public final class Yut2GameProto {
       @java.lang.Override
       public Builder clear() {
         super.clear();
+        useChance_ = false;
+
         return this;
       }
 
@@ -108839,6 +108901,7 @@ public final class Yut2GameProto {
       @java.lang.Override
       public com.nhn.yut2.server.protocol.Yut2GameProto.Yut2FenToS buildPartial() {
         com.nhn.yut2.server.protocol.Yut2GameProto.Yut2FenToS result = new com.nhn.yut2.server.protocol.Yut2GameProto.Yut2FenToS(this);
+        result.useChance_ = useChance_;
         onBuilt();
         return result;
       }
@@ -108887,6 +108950,9 @@ public final class Yut2GameProto {
 
       public Builder mergeFrom(com.nhn.yut2.server.protocol.Yut2GameProto.Yut2FenToS other) {
         if (other == com.nhn.yut2.server.protocol.Yut2GameProto.Yut2FenToS.getDefaultInstance()) return this;
+        if (other.getUseChance() != false) {
+          setUseChance(other.getUseChance());
+        }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
@@ -108913,6 +108979,32 @@ public final class Yut2GameProto {
             mergeFrom(parsedMessage);
           }
         }
+        return this;
+      }
+
+      private boolean useChance_ ;
+      /**
+       * <code>bool useChance = 1;</code>
+       */
+      public boolean getUseChance() {
+        return useChance_;
+      }
+      /**
+       * <code>bool useChance = 1;</code>
+       */
+      public Builder setUseChance(boolean value) {
+        
+        useChance_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool useChance = 1;</code>
+       */
+      public Builder clearUseChance() {
+        
+        useChance_ = false;
+        onChanged();
         return this;
       }
       @java.lang.Override
@@ -109576,6 +109668,1169 @@ public final class Yut2GameProto {
 
     @java.lang.Override
     public com.nhn.yut2.server.protocol.Yut2GameProto.Yut2FenToC getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface Yut2ProxyAiToSOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.nhn.yut2.server.protocol.Yut2ProxyAiToS)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>string postBody = 1;</code>
+     */
+    java.lang.String getPostBody();
+    /**
+     * <code>string postBody = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getPostBodyBytes();
+  }
+  /**
+   * Protobuf type {@code com.nhn.yut2.server.protocol.Yut2ProxyAiToS}
+   */
+  public  static final class Yut2ProxyAiToS extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:com.nhn.yut2.server.protocol.Yut2ProxyAiToS)
+      Yut2ProxyAiToSOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use Yut2ProxyAiToS.newBuilder() to construct.
+    private Yut2ProxyAiToS(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private Yut2ProxyAiToS() {
+      postBody_ = "";
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private Yut2ProxyAiToS(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              postBody_ = s;
+              break;
+            }
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.nhn.yut2.server.protocol.Yut2GameProto.internal_static_com_nhn_yut2_server_protocol_Yut2ProxyAiToS_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.nhn.yut2.server.protocol.Yut2GameProto.internal_static_com_nhn_yut2_server_protocol_Yut2ProxyAiToS_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS.class, com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS.Builder.class);
+    }
+
+    public static final int POSTBODY_FIELD_NUMBER = 1;
+    private volatile java.lang.Object postBody_;
+    /**
+     * <code>string postBody = 1;</code>
+     */
+    public java.lang.String getPostBody() {
+      java.lang.Object ref = postBody_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        postBody_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string postBody = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getPostBodyBytes() {
+      java.lang.Object ref = postBody_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        postBody_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getPostBodyBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, postBody_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getPostBodyBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, postBody_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS)) {
+        return super.equals(obj);
+      }
+      com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS other = (com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS) obj;
+
+      boolean result = true;
+      result = result && getPostBody()
+          .equals(other.getPostBody());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + POSTBODY_FIELD_NUMBER;
+      hash = (53 * hash) + getPostBody().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.nhn.yut2.server.protocol.Yut2ProxyAiToS}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.nhn.yut2.server.protocol.Yut2ProxyAiToS)
+        com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToSOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.nhn.yut2.server.protocol.Yut2GameProto.internal_static_com_nhn_yut2_server_protocol_Yut2ProxyAiToS_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.nhn.yut2.server.protocol.Yut2GameProto.internal_static_com_nhn_yut2_server_protocol_Yut2ProxyAiToS_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS.class, com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS.Builder.class);
+      }
+
+      // Construct using com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        postBody_ = "";
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.nhn.yut2.server.protocol.Yut2GameProto.internal_static_com_nhn_yut2_server_protocol_Yut2ProxyAiToS_descriptor;
+      }
+
+      @java.lang.Override
+      public com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS getDefaultInstanceForType() {
+        return com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS build() {
+        com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS buildPartial() {
+        com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS result = new com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS(this);
+        result.postBody_ = postBody_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS) {
+          return mergeFrom((com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS other) {
+        if (other == com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS.getDefaultInstance()) return this;
+        if (!other.getPostBody().isEmpty()) {
+          postBody_ = other.postBody_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private java.lang.Object postBody_ = "";
+      /**
+       * <code>string postBody = 1;</code>
+       */
+      public java.lang.String getPostBody() {
+        java.lang.Object ref = postBody_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          postBody_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string postBody = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getPostBodyBytes() {
+        java.lang.Object ref = postBody_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          postBody_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string postBody = 1;</code>
+       */
+      public Builder setPostBody(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        postBody_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string postBody = 1;</code>
+       */
+      public Builder clearPostBody() {
+        
+        postBody_ = getDefaultInstance().getPostBody();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string postBody = 1;</code>
+       */
+      public Builder setPostBodyBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        postBody_ = value;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:com.nhn.yut2.server.protocol.Yut2ProxyAiToS)
+    }
+
+    // @@protoc_insertion_point(class_scope:com.nhn.yut2.server.protocol.Yut2ProxyAiToS)
+    private static final com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS();
+    }
+
+    public static com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<Yut2ProxyAiToS>
+        PARSER = new com.google.protobuf.AbstractParser<Yut2ProxyAiToS>() {
+      @java.lang.Override
+      public Yut2ProxyAiToS parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new Yut2ProxyAiToS(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<Yut2ProxyAiToS> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Yut2ProxyAiToS> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToS getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface Yut2ProxyAiToCOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.nhn.yut2.server.protocol.Yut2ProxyAiToC)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int32 retCode = 1;</code>
+     */
+    int getRetCode();
+
+    /**
+     * <code>string postBody = 2;</code>
+     */
+    java.lang.String getPostBody();
+    /**
+     * <code>string postBody = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getPostBodyBytes();
+  }
+  /**
+   * Protobuf type {@code com.nhn.yut2.server.protocol.Yut2ProxyAiToC}
+   */
+  public  static final class Yut2ProxyAiToC extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:com.nhn.yut2.server.protocol.Yut2ProxyAiToC)
+      Yut2ProxyAiToCOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use Yut2ProxyAiToC.newBuilder() to construct.
+    private Yut2ProxyAiToC(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private Yut2ProxyAiToC() {
+      retCode_ = 0;
+      postBody_ = "";
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private Yut2ProxyAiToC(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              retCode_ = input.readInt32();
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              postBody_ = s;
+              break;
+            }
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.nhn.yut2.server.protocol.Yut2GameProto.internal_static_com_nhn_yut2_server_protocol_Yut2ProxyAiToC_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.nhn.yut2.server.protocol.Yut2GameProto.internal_static_com_nhn_yut2_server_protocol_Yut2ProxyAiToC_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC.class, com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC.Builder.class);
+    }
+
+    public static final int RETCODE_FIELD_NUMBER = 1;
+    private int retCode_;
+    /**
+     * <code>int32 retCode = 1;</code>
+     */
+    public int getRetCode() {
+      return retCode_;
+    }
+
+    public static final int POSTBODY_FIELD_NUMBER = 2;
+    private volatile java.lang.Object postBody_;
+    /**
+     * <code>string postBody = 2;</code>
+     */
+    public java.lang.String getPostBody() {
+      java.lang.Object ref = postBody_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        postBody_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string postBody = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getPostBodyBytes() {
+      java.lang.Object ref = postBody_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        postBody_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (retCode_ != 0) {
+        output.writeInt32(1, retCode_);
+      }
+      if (!getPostBodyBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, postBody_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (retCode_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, retCode_);
+      }
+      if (!getPostBodyBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, postBody_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC)) {
+        return super.equals(obj);
+      }
+      com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC other = (com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC) obj;
+
+      boolean result = true;
+      result = result && (getRetCode()
+          == other.getRetCode());
+      result = result && getPostBody()
+          .equals(other.getPostBody());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + RETCODE_FIELD_NUMBER;
+      hash = (53 * hash) + getRetCode();
+      hash = (37 * hash) + POSTBODY_FIELD_NUMBER;
+      hash = (53 * hash) + getPostBody().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.nhn.yut2.server.protocol.Yut2ProxyAiToC}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.nhn.yut2.server.protocol.Yut2ProxyAiToC)
+        com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToCOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.nhn.yut2.server.protocol.Yut2GameProto.internal_static_com_nhn_yut2_server_protocol_Yut2ProxyAiToC_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.nhn.yut2.server.protocol.Yut2GameProto.internal_static_com_nhn_yut2_server_protocol_Yut2ProxyAiToC_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC.class, com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC.Builder.class);
+      }
+
+      // Construct using com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        retCode_ = 0;
+
+        postBody_ = "";
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.nhn.yut2.server.protocol.Yut2GameProto.internal_static_com_nhn_yut2_server_protocol_Yut2ProxyAiToC_descriptor;
+      }
+
+      @java.lang.Override
+      public com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC getDefaultInstanceForType() {
+        return com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC build() {
+        com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC buildPartial() {
+        com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC result = new com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC(this);
+        result.retCode_ = retCode_;
+        result.postBody_ = postBody_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC) {
+          return mergeFrom((com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC other) {
+        if (other == com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC.getDefaultInstance()) return this;
+        if (other.getRetCode() != 0) {
+          setRetCode(other.getRetCode());
+        }
+        if (!other.getPostBody().isEmpty()) {
+          postBody_ = other.postBody_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int retCode_ ;
+      /**
+       * <code>int32 retCode = 1;</code>
+       */
+      public int getRetCode() {
+        return retCode_;
+      }
+      /**
+       * <code>int32 retCode = 1;</code>
+       */
+      public Builder setRetCode(int value) {
+        
+        retCode_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 retCode = 1;</code>
+       */
+      public Builder clearRetCode() {
+        
+        retCode_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object postBody_ = "";
+      /**
+       * <code>string postBody = 2;</code>
+       */
+      public java.lang.String getPostBody() {
+        java.lang.Object ref = postBody_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          postBody_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string postBody = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getPostBodyBytes() {
+        java.lang.Object ref = postBody_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          postBody_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string postBody = 2;</code>
+       */
+      public Builder setPostBody(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        postBody_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string postBody = 2;</code>
+       */
+      public Builder clearPostBody() {
+        
+        postBody_ = getDefaultInstance().getPostBody();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string postBody = 2;</code>
+       */
+      public Builder setPostBodyBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        postBody_ = value;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:com.nhn.yut2.server.protocol.Yut2ProxyAiToC)
+    }
+
+    // @@protoc_insertion_point(class_scope:com.nhn.yut2.server.protocol.Yut2ProxyAiToC)
+    private static final com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC();
+    }
+
+    public static com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<Yut2ProxyAiToC>
+        PARSER = new com.google.protobuf.AbstractParser<Yut2ProxyAiToC>() {
+      @java.lang.Override
+      public Yut2ProxyAiToC parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new Yut2ProxyAiToC(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<Yut2ProxyAiToC> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Yut2ProxyAiToC> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.nhn.yut2.server.protocol.Yut2GameProto.Yut2ProxyAiToC getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -110256,6 +111511,16 @@ public final class Yut2GameProto {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_com_nhn_yut2_server_protocol_Yut2FenToC_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_nhn_yut2_server_protocol_Yut2ProxyAiToS_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_nhn_yut2_server_protocol_Yut2ProxyAiToS_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_nhn_yut2_server_protocol_Yut2ProxyAiToC_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_nhn_yut2_server_protocol_Yut2ProxyAiToC_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -110649,55 +111914,59 @@ public final class Yut2GameProto {
       "\022\017\n\007retCode\030\001 \001(\005\022\026\n\016inviteNickName\030\002 \001(" +
       "\t\022`\n\034friendGamePlayJoinAnswerType\030\003 \001(\0162" +
       ":.com.nhn.yut2.server.protocol.FriendGam" +
-      "ePlayJoinAnswerType\"\014\n\nYut2FenToS\"+\n\nYut" +
-      "2FenToC\022\017\n\007retCode\030\001 \001(\005\022\014\n\004data\030\002 \001(\t*}" +
-      "\n\017FreeBettingType\022\010\n\004NONE\020\000\022\007\n\003PIN\020\001\022\t\n\005" +
-      "CHECK\020\002\022\014\n\010ONE_MORE\020\003\022\010\n\004CALL\020\004\022\013\n\007QUART" +
-      "ER\020\005\022\010\n\004HALF\020\006\022\010\n\004FULL\020\007\022\n\n\006ALL_IN\020\010\022\007\n\003" +
-      "DIE\020\t*J\n\007PaeType\022\006\n\002DO\020\000\022\007\n\003GAE\020\001\022\007\n\003GUL" +
-      "\020\002\022\010\n\004YYUT\020\003\022\006\n\002MO\020\004\022\n\n\006BACKDO\020\005\022\007\n\003NAK\020" +
-      "\006*5\n\rPawnStateCode\022\t\n\005READY\020\000\022\014\n\010ON_BOAR" +
-      "D\020\001\022\013\n\007HOME_IN\020\002*M\n\017PlayerStateCode\022\t\n\005R" +
-      "eady\020\000\022\013\n\007Running\020\001\022\010\n\004Stop\020\002\022\n\n\006Winner\020" +
-      "\003\022\014\n\010Observer\020\004*:\n\rSeatStateCode\022\n\n\006SIT_" +
-      "IN\020\000\022\014\n\010SIT_FULL\020\001\022\017\n\013RESERVE_OUT\020\002*\223\001\n\t" +
-      "RoomState\022\016\n\nROOM_READY\020\000\022\025\n\021ROOM_ELECT_" +
-      "LEADER\020\001\022\025\n\021ROOM_PREPARE_GAME\020\002\022\021\n\rROOM_" +
-      "TOSS_YUT\020\003\022\022\n\016ROOM_MOVE_PAWN\020\004\022\020\n\014ROOM_B" +
-      "ETTING\020\005\022\017\n\013ROOM_FINISH\020\006*\240\001\n\010WarpType\022\r",
-      "\n\tWARP_NONE\020\000\022\013\n\007WARP_DO\020\001\022\014\n\010WARP_GAE\020\002" +
-      "\022\014\n\010WARP_GUL\020\003\022\r\n\tWARP_YYUT\020\004\022\013\n\007WARP_MO" +
-      "\020\005\022\r\n\tWARP_GOAL\020\006\022\n\n\006WARP_5\020\007\022\013\n\007WARP_10" +
-      "\020\010\022\013\n\007WARP_15\020\t\022\013\n\007WARP_22\020\n*0\n\tCHAT_TYP" +
-      "E\022\n\n\006NORMAL\020\000\022\013\n\007WHISPER\020\001\022\n\n\006NOTICE\020\002*\207" +
-      "\001\n\tEquipSlot\022\r\n\tNONE_SLOT\020\000\022\014\n\010EMOTICON\020" +
-      "\001\022\t\n\005DRINK\020\002\022\014\n\010YUT_SKIN\020\003\022\t\n\005BADGE\020\004\022\025\n" +
-      "\021DRINK_BINGO_POINT\020\005\022\020\n\014SUBSCRIPTION\020\006\022\020" +
-      "\n\014ROOM_MANAGER\020\007*\250\001\n\014PawnBuffType\022\010\n\004Non" +
-      "e\020\000\022\017\n\013MONEY_BONUS\020\001\022\024\n\020LEVELPOINT_BONUS" +
-      "\020\002\022\024\n\020BINGOPOINT_BONUS\020\003\022\023\n\017GUBAK_GUARAN" +
-      "TEE\020\004\022\024\n\020MALBAK_GUARANTEE\020\005\022\021\n\rNAK_GUARA" +
-      "NTEE\020\006\022\023\n\017EVENTITEM_BONUS\020\007*,\n\013YutBuffTy" +
-      "pe\022\013\n\007YB_NONE\020\000\022\020\n\014YB_ADD_MONEY\020\001*i\n\013Res" +
-      "erveFlag\022\014\n\010FlagNone\020\000\022\r\n\tLeaveRoom\020\001\022\014\n" +
-      "\010MoveRoom\020\002\022\014\n\010AutoPlay\020\003\022\017\n\013MobilePause" +
-      "\020\004\022\020\n\014MobileResume\020\005*B\n\020ExtraReserveFlag" +
-      "\022\024\n\020ExtraReserveNone\020\000\022\030\n\024ForceOutByRoom" +
-      "Master\020\001*\232\001\n\022ClientCompleteType\022\016\n\nEnter" +
-      "_Room\020\000\022\021\n\rResult_Leader\020\001\022\017\n\013Default_Be" +
-      "t\020\002\022\014\n\010Toss_Yut\020\003\022\r\n\tMove_Pawn\020\004\022\023\n\017Play" +
-      "_Game_Ready\020\005\022\017\n\013Game_Result\020\006\022\r\n\tWarp_P" +
-      "awn\020\007*2\n\021FriendConfirmType\022\016\n\nFRIEND_YES" +
-      "\020\000\022\r\n\tFRIEND_NO\020\001*O\n\013FriendState\022\017\n\013FRIE" +
-      "ND_NONE\020\000\022\r\n\tFRIEND_OK\020\001\022\017\n\013FRIEND_RECV\020" +
-      "\002\022\017\n\013FRIEND_SEND\020\003*C\n\020FriendPointState\022\027" +
-      "\n\023FRIEND_POINT_BEFORE\020\000\022\026\n\022FRIEND_POINT_" +
-      "AFTER\020\001*:\n\rMemoReadState\022\024\n\020MEMO_READ_BE" +
-      "FORE\020\000\022\023\n\017MEMO_READ_AFTER\020\001*\200\001\n\034FriendGa" +
-      "mePlayJoinAnswerType\022\035\n\031FRIEND_GAME_PLAY" +
-      "_JOIN_YES\020\000\022\034\n\030FRIEND_GAME_PLAY_JOIN_NO\020" +
-      "\001\022#\n\037FRIEND_GAME_PLAY_JOIN_NOT_LOBBY\020\002b\006" +
-      "proto3"
+      "ePlayJoinAnswerType\"\037\n\nYut2FenToS\022\021\n\tuse" +
+      "Chance\030\001 \001(\010\"+\n\nYut2FenToC\022\017\n\007retCode\030\001 " +
+      "\001(\005\022\014\n\004data\030\002 \001(\t\"\"\n\016Yut2ProxyAiToS\022\020\n\010p" +
+      "ostBody\030\001 \001(\t\"3\n\016Yut2ProxyAiToC\022\017\n\007retCo" +
+      "de\030\001 \001(\005\022\020\n\010postBody\030\002 \001(\t*}\n\017FreeBettin" +
+      "gType\022\010\n\004NONE\020\000\022\007\n\003PIN\020\001\022\t\n\005CHECK\020\002\022\014\n\010O" +
+      "NE_MORE\020\003\022\010\n\004CALL\020\004\022\013\n\007QUARTER\020\005\022\010\n\004HALF" +
+      "\020\006\022\010\n\004FULL\020\007\022\n\n\006ALL_IN\020\010\022\007\n\003DIE\020\t*J\n\007Pae" +
+      "Type\022\006\n\002DO\020\000\022\007\n\003GAE\020\001\022\007\n\003GUL\020\002\022\010\n\004YYUT\020\003" +
+      "\022\006\n\002MO\020\004\022\n\n\006BACKDO\020\005\022\007\n\003NAK\020\006*5\n\rPawnSta" +
+      "teCode\022\t\n\005READY\020\000\022\014\n\010ON_BOARD\020\001\022\013\n\007HOME_" +
+      "IN\020\002*M\n\017PlayerStateCode\022\t\n\005Ready\020\000\022\013\n\007Ru" +
+      "nning\020\001\022\010\n\004Stop\020\002\022\n\n\006Winner\020\003\022\014\n\010Observe" +
+      "r\020\004*:\n\rSeatStateCode\022\n\n\006SIT_IN\020\000\022\014\n\010SIT_" +
+      "FULL\020\001\022\017\n\013RESERVE_OUT\020\002*\223\001\n\tRoomState\022\016\n" +
+      "\nROOM_READY\020\000\022\025\n\021ROOM_ELECT_LEADER\020\001\022\025\n\021",
+      "ROOM_PREPARE_GAME\020\002\022\021\n\rROOM_TOSS_YUT\020\003\022\022" +
+      "\n\016ROOM_MOVE_PAWN\020\004\022\020\n\014ROOM_BETTING\020\005\022\017\n\013" +
+      "ROOM_FINISH\020\006*\240\001\n\010WarpType\022\r\n\tWARP_NONE\020" +
+      "\000\022\013\n\007WARP_DO\020\001\022\014\n\010WARP_GAE\020\002\022\014\n\010WARP_GUL" +
+      "\020\003\022\r\n\tWARP_YYUT\020\004\022\013\n\007WARP_MO\020\005\022\r\n\tWARP_G" +
+      "OAL\020\006\022\n\n\006WARP_5\020\007\022\013\n\007WARP_10\020\010\022\013\n\007WARP_1" +
+      "5\020\t\022\013\n\007WARP_22\020\n*0\n\tCHAT_TYPE\022\n\n\006NORMAL\020" +
+      "\000\022\013\n\007WHISPER\020\001\022\n\n\006NOTICE\020\002*\207\001\n\tEquipSlot" +
+      "\022\r\n\tNONE_SLOT\020\000\022\014\n\010EMOTICON\020\001\022\t\n\005DRINK\020\002" +
+      "\022\014\n\010YUT_SKIN\020\003\022\t\n\005BADGE\020\004\022\025\n\021DRINK_BINGO" +
+      "_POINT\020\005\022\020\n\014SUBSCRIPTION\020\006\022\020\n\014ROOM_MANAG" +
+      "ER\020\007*\342\001\n\014PawnBuffType\022\010\n\004None\020\000\022\017\n\013MONEY" +
+      "_BONUS\020\001\022\024\n\020LEVELPOINT_BONUS\020\002\022\024\n\020BINGOP" +
+      "OINT_BONUS\020\003\022\023\n\017GUBAK_GUARANTEE\020\004\022\024\n\020MAL" +
+      "BAK_GUARANTEE\020\005\022\021\n\rNAK_GUARANTEE\020\006\022\023\n\017EV" +
+      "ENTITEM_BONUS\020\007\022\021\n\rGUBAK_BY_SEED\020\010\022\022\n\016MA" +
+      "LBAK_BY_SEED\020\t\022\021\n\rMONEY_BY_SEED\020\n*,\n\013Yut" +
+      "BuffType\022\013\n\007YB_NONE\020\000\022\020\n\014YB_ADD_MONEY\020\001*" +
+      "i\n\013ReserveFlag\022\014\n\010FlagNone\020\000\022\r\n\tLeaveRoo" +
+      "m\020\001\022\014\n\010MoveRoom\020\002\022\014\n\010AutoPlay\020\003\022\017\n\013Mobil" +
+      "ePause\020\004\022\020\n\014MobileResume\020\005*B\n\020ExtraReser" +
+      "veFlag\022\024\n\020ExtraReserveNone\020\000\022\030\n\024ForceOut" +
+      "ByRoomMaster\020\001*\232\001\n\022ClientCompleteType\022\016\n" +
+      "\nEnter_Room\020\000\022\021\n\rResult_Leader\020\001\022\017\n\013Defa" +
+      "ult_Bet\020\002\022\014\n\010Toss_Yut\020\003\022\r\n\tMove_Pawn\020\004\022\023" +
+      "\n\017Play_Game_Ready\020\005\022\017\n\013Game_Result\020\006\022\r\n\t" +
+      "Warp_Pawn\020\007*2\n\021FriendConfirmType\022\016\n\nFRIE" +
+      "ND_YES\020\000\022\r\n\tFRIEND_NO\020\001*O\n\013FriendState\022\017" +
+      "\n\013FRIEND_NONE\020\000\022\r\n\tFRIEND_OK\020\001\022\017\n\013FRIEND" +
+      "_RECV\020\002\022\017\n\013FRIEND_SEND\020\003*C\n\020FriendPointS" +
+      "tate\022\027\n\023FRIEND_POINT_BEFORE\020\000\022\026\n\022FRIEND_" +
+      "POINT_AFTER\020\001*:\n\rMemoReadState\022\024\n\020MEMO_R" +
+      "EAD_BEFORE\020\000\022\023\n\017MEMO_READ_AFTER\020\001*\200\001\n\034Fr" +
+      "iendGamePlayJoinAnswerType\022\035\n\031FRIEND_GAM" +
+      "E_PLAY_JOIN_YES\020\000\022\034\n\030FRIEND_GAME_PLAY_JO" +
+      "IN_NO\020\001\022#\n\037FRIEND_GAME_PLAY_JOIN_NOT_LOB" +
+      "BY\020\002b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -111514,13 +112783,25 @@ public final class Yut2GameProto {
     internal_static_com_nhn_yut2_server_protocol_Yut2FenToS_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_nhn_yut2_server_protocol_Yut2FenToS_descriptor,
-        new java.lang.String[] { });
+        new java.lang.String[] { "UseChance", });
     internal_static_com_nhn_yut2_server_protocol_Yut2FenToC_descriptor =
       getDescriptor().getMessageTypes().get(127);
     internal_static_com_nhn_yut2_server_protocol_Yut2FenToC_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_nhn_yut2_server_protocol_Yut2FenToC_descriptor,
         new java.lang.String[] { "RetCode", "Data", });
+    internal_static_com_nhn_yut2_server_protocol_Yut2ProxyAiToS_descriptor =
+      getDescriptor().getMessageTypes().get(128);
+    internal_static_com_nhn_yut2_server_protocol_Yut2ProxyAiToS_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_nhn_yut2_server_protocol_Yut2ProxyAiToS_descriptor,
+        new java.lang.String[] { "PostBody", });
+    internal_static_com_nhn_yut2_server_protocol_Yut2ProxyAiToC_descriptor =
+      getDescriptor().getMessageTypes().get(129);
+    internal_static_com_nhn_yut2_server_protocol_Yut2ProxyAiToC_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_nhn_yut2_server_protocol_Yut2ProxyAiToC_descriptor,
+        new java.lang.String[] { "RetCode", "PostBody", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

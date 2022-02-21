@@ -13,6 +13,6 @@ public class GameConstants {
 
     public static enum GameChannelType
     {
-        Seed1k, Seed5k, Seed10k, Seed3k
+        Seed1k, Seed5k, Seed10k, Seed3k, Seed30k, Seed50k, Seed100k, Seed20k
     };
 }

@@ -1,7 +1,7 @@
 {
   "targetServerList": [
     {
-      "ip": "alpha-sinyutnori2.hangame.com",
+      "ip": "dev-sinyutnori2.hangame.com",
       "port": 11200,
       "useSecureSocket": true
     }

@@ -72,7 +72,8 @@ public class _4_LoginState extends State<Yut2Actor> {
                 }
                 else {
                     // matchroom
-                    actor.changeState(_9_RoomListState.class);
+                    // actor.changeState(_9_RoomListState.class);
+                    actor.changeState(_5_MatchRoomState.class);
                 }
             } else {
                 /*

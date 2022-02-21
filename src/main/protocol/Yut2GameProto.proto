@@ -100,6 +100,9 @@ enum PawnBuffType {
     MALBAK_GUARANTEE = 5; // 말박 보험
     NAK_GUARANTEE = 6; // 낙 보험
     EVENTITEM_BONUS = 7; // 이벤트 아이템 추가
+    GUBAK_BY_SEED = 8;
+    MALBAK_BY_SEED = 9;
+    MONEY_BY_SEED = 10;
 }
 
 enum YutBuffType {
@@ -1004,10 +1007,19 @@ message FriendGamePlayRequestAnswerToC {
 }
 
 message Yut2FenToS {
-
+    bool useChance = 1;
 }
 
 message Yut2FenToC {
     int32 retCode = 1;
     string data = 2;
+}
+
+message Yut2ProxyAiToS {
+    string postBody = 1;
+}
+
+message Yut2ProxyAiToC {
+    int32 retCode = 1;
+    string postBody = 2;
 }

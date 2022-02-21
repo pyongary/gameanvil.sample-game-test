@@ -45,7 +45,8 @@ public class _6_EnterRoomState extends State<Yut2Actor> {
     private void OnLeaveRoom(Yut2Actor actor, ResultForceLeaveRoomNoti packetResult) {
         // 서버에서 kick out 당하면 이리 들어온다.
         logger.info("<==OnLeaveRoom[{}-{}]: resultCode={}",actor.getIndex(), actor.getNickname() , packetResult.getResultCode());
-        actor.changeState(_9_RoomListState.class);
+        // actor.changeState(_9_RoomListState.class);
+        actor.changeState(_5_MatchRoomState.class);
     }
 
     private void OnEnterRoomToC(Yut2Actor actor, PacketResult packetResult) {

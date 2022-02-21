@@ -27,8 +27,9 @@ public class _7_LeaveRoomState extends State<Yut2Actor> {
         // 게임 종료
         actor.getUser().leaveRoom((leaveRoomResult) -> {
             if (leaveRoomResult.isSuccess()) {
+                actor.changeState(_5_MatchRoomState.class);
                 // actor.changeState(_8_LogoutState.class);
-                actor.changeState(_9_RoomListState.class);
+                // actor.changeState(_9_RoomListState.class);
             } else {
                 logger.error(
                     "[{}] Fail - uuid : {}, AccountId : {}\t{}, {}",
